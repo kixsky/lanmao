@@ -1,8 +1,10 @@
 server:
-  port: 8181
+  port: 8183
 spring:
   application:
     name: lanmao-web-bops
+  main:
+    allow-bean-definition-overriding: true
   jackson:
     default-property-inclusion: non_null
     serialization:
