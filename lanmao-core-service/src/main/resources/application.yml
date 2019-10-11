@@ -1,0 +1,22 @@
+server:
+  port: 8182
+spring:
+  application:
+    name: lanmao-core-service
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://47.105.132.129:3306/lanmao?useUnicode=true&characterEncoding=utf8
+    username: lanmao
+    password: Lanmao2019@
+  jackson:
+    default-property-inclusion: non_null
+    serialization:
+      fail-on-empty-beans: false
+      write-dates-as-timestamps: false
+    time-zone: GMT+08
+    date-format: yyyy-MM-dd HH:mm:ss
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 47.105.132.129:8848

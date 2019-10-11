@@ -42,12 +42,11 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- 其他依赖 -->
-<!--		<dependency>-->
-<!--			<groupId>com.lanmaop</groupId>-->
-<!--			<artifactId>lanmao-common</artifactId>-->
-<!--			<version>1.0.0</version>-->
-<!--		</dependency>-->
+		<dependency>
+			<groupId>com.lanmao</groupId>
+			<artifactId>lanmao-common</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
