@@ -11,6 +11,7 @@
 	<groupId>com.lanmao</groupId>
 	<artifactId>lanmao-user-bops</artifactId>
 	<version>1.0.0</version>
+	<packaging>jar</packaging>
 	<name>lanmao-user-bops</name>
 	<description>Demo project for Spring Boot</description>
 
@@ -81,6 +82,7 @@
 	</dependencyManagement>
 
 	<build>
+		<finalName>lanmao-user-bops</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
