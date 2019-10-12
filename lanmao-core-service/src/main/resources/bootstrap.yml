@@ -1,0 +1,12 @@
+server:
+  port: 8181
+spring:
+  application:
+    name: lanmao-core-service
+  cloud:
+    nacos:
+      config:
+        file-extension: yaml
+        server-addr: 47.105.132.129:8848
+      discovery:
+        server-addr: 47.105.132.129:8848

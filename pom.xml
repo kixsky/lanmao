@@ -34,5 +34,6 @@
     <module>lanmao-user-bops</module>
     <module>lanmao-common</module>
     <module>lanmao-web-bops</module>
+    <module>lanmao-mech-bops</module>
   </modules>
 </project>
