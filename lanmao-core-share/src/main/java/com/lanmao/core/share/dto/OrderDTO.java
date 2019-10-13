@@ -4,5 +4,5 @@ import com.lanmao.common.bean.BaseBean;
 import lombok.Data;
 
 @Data
-public class ProductDTO extends BaseBean {
+public class OrderDTO extends BaseBean {
 }

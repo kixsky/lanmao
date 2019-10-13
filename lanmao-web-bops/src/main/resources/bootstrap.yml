@@ -5,14 +5,10 @@ spring:
     name: lanmao-web-bops
   main:
     allow-bean-definition-overriding: true
-  jackson:
-    default-property-inclusion: non_null
-    serialization:
-      fail-on-empty-beans: false
-      write-dates-as-timestamps: false
-    time-zone: GMT+08
-    date-format: yyyy-MM-dd HH:mm:ss
   cloud:
     nacos:
+      config:
+        file-extension: yaml
+        server-addr: 47.105.132.129:8848
       discovery:
         server-addr: 47.105.132.129:8848

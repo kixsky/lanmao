@@ -1,1 +1,16 @@
+server:
+  port: 8184
+spring:
+  application:
+    name: lanmao-mech-bops
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      config:
+        file-extension: yaml
+        server-addr: 47.105.132.129:8848
+      discovery:
+        server-addr: 47.105.132.129:8848
+
 
