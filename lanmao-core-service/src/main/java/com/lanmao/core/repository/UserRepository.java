@@ -16,7 +16,7 @@ import java.util.Map;
 
 @Repository
 @Slf4j
-public class UserRepository implements BaseRepository<UserDTO> {
+public class UserRepository extends BaseRepository<UserDTO> {
 
     @Resource
     private UserDAO userDAO;

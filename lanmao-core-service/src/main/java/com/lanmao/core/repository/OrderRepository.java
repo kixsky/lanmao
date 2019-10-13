@@ -14,7 +14,7 @@ import java.util.List;
 
 @Repository
 @Slf4j
-public class OrderRepository implements BaseRepository<OrderDTO> {
+public class OrderRepository extends BaseRepository<OrderDTO> {
 
     @Resource
     private OrderDAO orderMapper;

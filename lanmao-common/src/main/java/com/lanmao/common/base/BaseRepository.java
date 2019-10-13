@@ -2,7 +2,7 @@ package com.lanmao.common.base;
 
 import java.util.List;
 
-public interface BaseRepository<T> {
+public abstract class BaseRepository<T> {
 
 
     /**
@@ -10,7 +10,7 @@ public interface BaseRepository<T> {
      * @param saveObject
      * @return
      */
-    Long save(T saveObject);
+    public abstract Long save(T saveObject);
 
 
     /**
@@ -18,7 +18,7 @@ public interface BaseRepository<T> {
      * @param id
      * @return
      */
-    T queryById(Long id);
+    public abstract T queryById(Long id);
 
 
     /**
@@ -27,7 +27,7 @@ public interface BaseRepository<T> {
      * @param query
      * @return
      */
-    List<T> queryList(T query);
+    public abstract List<T> queryList(T query);
 
 
     /**
@@ -36,7 +36,7 @@ public interface BaseRepository<T> {
      * @param query
      * @return
      */
-    T queryOne(T query);
+    public abstract T queryOne(T query);
 
 
     /**
@@ -45,5 +45,5 @@ public interface BaseRepository<T> {
      * @param updateObject
      * @return
      */
-    int updateById(T updateObject);
+    public abstract int updateById(T updateObject);
 }

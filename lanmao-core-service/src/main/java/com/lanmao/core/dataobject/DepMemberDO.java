@@ -7,8 +7,8 @@ import com.lanmao.common.bean.BaseBean;
 import lombok.Data;
 
 @Data
-@TableName("coupon")
-public class CouponDO extends BaseBean {
+@TableName("dep_member")
+public class DepMemberDO extends BaseBean {
 
     @TableId(type = IdType.AUTO)
     private Long id;
