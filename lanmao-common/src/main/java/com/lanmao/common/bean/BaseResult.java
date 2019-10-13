@@ -2,17 +2,17 @@ package com.lanmao.common.bean;
 
 public class BaseResult<T> {
 
-    private String code;
+    private Integer code;
 
     private String message;
 
     private T data;
 
-    public String getCode() {
+    public Integer getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(Integer code) {
         this.code = code;
     }
 

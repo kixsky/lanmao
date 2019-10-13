@@ -10,3 +10,9 @@ spring:
         server-addr: 47.105.132.129:8848
       discovery:
         server-addr: 47.105.132.129:8848
+logging:
+  level:
+    com:
+      lanmao:
+        core:
+          mapper: debug

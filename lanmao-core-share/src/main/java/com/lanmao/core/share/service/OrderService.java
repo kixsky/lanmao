@@ -20,5 +20,5 @@ public interface OrderService {
      * @return
      */
     @RequestMapping(value = "/addOrder", method = RequestMethod.POST)
-    BaseResult<String> addOrder(@RequestBody OrderDTO orderDTO);
+    BaseResult<Long> addOrder(@RequestBody OrderDTO orderDTO);
 }

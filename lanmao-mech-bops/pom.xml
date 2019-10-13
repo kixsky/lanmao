@@ -55,6 +55,11 @@
 			<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
 			<version>0.2.2.RELEASE</version>
 		</dependency>
+		<!-- redis -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>com.lanmao</groupId>
 			<artifactId>lanmao-core-share</artifactId>

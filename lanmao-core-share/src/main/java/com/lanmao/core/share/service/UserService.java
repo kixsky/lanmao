@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.List;
+
 @FeignClient(value = Constants.SERVICE_NAME)
 @RequestMapping(value = "/api/user")
 public interface UserService {
@@ -15,6 +17,16 @@ public interface UserService {
 
     @RequestMapping(value = "/query", method = RequestMethod.POST)
     BaseResult<UserDTO> query(@RequestBody UserDTO user);
+
+
+    /**
+     *
+     * 查询List
+     * @param queryObj
+     * @return
+     */
+    @RequestMapping(value = "/queryList", method = RequestMethod.POST)
+    BaseResult<List<UserDTO>> queryList(@RequestBody UserDTO queryObj);
 
 
     /**
