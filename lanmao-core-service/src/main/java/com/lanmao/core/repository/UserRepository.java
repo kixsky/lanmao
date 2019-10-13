@@ -7,6 +7,7 @@ import com.lanmao.core.dataobject.UserDO;
 import com.lanmao.core.mapper.UserDAO;
 import com.lanmao.core.share.dto.UserDTO;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
@@ -22,12 +23,19 @@ public class UserRepository implements BaseRepository<UserDTO> {
 
     @Override
     public Long save(UserDTO saveObject) {
-        return null;
+        UserDO record = new UserDO();
+        CommonUtils.copyProperties(saveObject, record);
+        userDAO.insert(record);
+        saveObject.setId(record.getId());
+        return record.getId();
     }
 
     @Override
     public UserDTO queryById(Long id) {
-        return null;
+        UserDO record = userDAO.selectById(id);
+        UserDTO resultDTO = new UserDTO();
+        CommonUtils.copyProperties(record, resultDTO);
+        return resultDTO;
     }
 
     @Override
@@ -40,11 +48,17 @@ public class UserRepository implements BaseRepository<UserDTO> {
 
     @Override
     public UserDTO queryOne(UserDTO query) {
+        List<UserDTO> list = queryList(query);
+        if (CollectionUtils.isNotEmpty(list)) {
+            return list.get(0);
+        }
         return null;
     }
 
     @Override
     public int updateById(UserDTO updateObject) {
-        return 0;
+        UserDO updateRecord = new UserDO();
+        CommonUtils.copyProperties(updateObject, updateRecord);
+        return userDAO.updateById(updateRecord);
     }
 }

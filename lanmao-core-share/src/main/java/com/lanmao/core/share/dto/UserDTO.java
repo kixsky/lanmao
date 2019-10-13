@@ -12,7 +12,7 @@ public class UserDTO extends BaseBean {
 
     private String name;
 
-    private String sex;
+    private String gender;
 
     private String avatar;
 

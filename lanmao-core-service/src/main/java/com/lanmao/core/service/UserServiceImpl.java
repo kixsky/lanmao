@@ -28,12 +28,21 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public BaseResult<UserDTO> query(@RequestBody UserDTO user) {
+    public BaseResult<UserDTO> queryOne(@RequestBody UserDTO user) {
         BaseResult<UserDTO> result = new BaseResult<>();
         result.setCode(ErrorCodeEnum.CODE_SUCCESS.getCode());
         result.setData(user);
         user.setGmtCreated(new Date());
         return result;
+    }
+
+    @Override
+    public BaseResult<Integer> updateById(@RequestBody UserDTO updateObj) {
+        BaseResult<Integer> baseResult = new BaseResult<>();
+        baseResult.setCode(ErrorCodeEnum.CODE_SUCCESS.getCode());
+        int updateCount = userRepository.updateById(updateObj);
+        baseResult.setData(updateCount);
+        return baseResult;
     }
 
     @Override
@@ -45,7 +54,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public BaseResult<Long> addUser(@RequestBody UserDTO userDTO) {
+    public BaseResult<Long> save(@RequestBody UserDTO userDTO) {
         BaseResult<Long> baseResult = new BaseResult<>();
         baseResult.setCode(ErrorCodeEnum.CODE_SUCCESS.getCode());
         try {
