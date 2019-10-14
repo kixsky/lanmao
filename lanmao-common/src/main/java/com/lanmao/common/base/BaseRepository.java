@@ -46,4 +46,13 @@ public abstract class BaseRepository<T> {
      * @return
      */
     public abstract int updateById(T updateObject);
+
+
+    /**
+     *
+     * 删除对象
+     * @param deleteObject
+     * @return
+     */
+    public abstract int deleteById(T deleteObject);
 }

@@ -17,6 +17,6 @@ public class UserController {
 
     @RequestMapping(value = "/getUser")
     BaseResult<UserDTO> getUser() {
-        return userService.query(new UserDTO());
+        return userService.queryOne(new UserDTO());
     }
 }

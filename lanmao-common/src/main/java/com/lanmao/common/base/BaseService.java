@@ -45,4 +45,14 @@ public interface BaseService<T> {
      */
     @RequestMapping(value = "/updateById", method = RequestMethod.POST)
     BaseResult<Integer> updateById(@RequestBody T updateObj);
+
+
+    /**
+     *
+     * 根据主键删除
+     * @param deleteObj
+     * @return
+     */
+    @RequestMapping(value = "/deleteById", method = RequestMethod.POST)
+    BaseResult<Integer> deleteById(@RequestBody T deleteObj);
 }

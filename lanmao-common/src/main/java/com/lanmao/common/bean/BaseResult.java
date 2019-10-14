@@ -1,5 +1,7 @@
 package com.lanmao.common.bean;
 
+import com.lanmao.common.constants.ErrorCodeEnum;
+
 public class BaseResult<T> {
 
     private Integer code;
@@ -7,6 +9,11 @@ public class BaseResult<T> {
     private String message;
 
     private T data;
+
+    public void setCodeSuccess() {
+        this.code = ErrorCodeEnum.CODE_SUCCESS.getCode();
+        this.message = ErrorCodeEnum.CODE_SUCCESS.getMessage();
+    }
 
     public Integer getCode() {
         return code;

@@ -63,4 +63,12 @@ public class ProductRepository extends BaseRepository<ProductDTO> {
         CommonUtils.copyProperties(updateObject, record);
         return productDAO.updateById(record);
     }
+
+    @Override
+    public int deleteById(ProductDTO deleteObject) {
+        ProductDO record = new ProductDO();
+        CommonUtils.copyProperties(deleteObject, record);
+        CommonUtils.setDeleteDefaultValue(record);
+        return productDAO.updateById(record);
+    }
 }

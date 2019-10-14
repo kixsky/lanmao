@@ -38,4 +38,9 @@ public class DepMemberServiceImpl implements DepMemberService {
     public BaseResult<Integer> updateById(@RequestBody DepMemberDTO updateObj) {
         return null;
     }
+
+    @Override
+    public BaseResult<Integer> deleteById(@RequestBody DepMemberDTO deleteObj) {
+        return null;
+    }
 }

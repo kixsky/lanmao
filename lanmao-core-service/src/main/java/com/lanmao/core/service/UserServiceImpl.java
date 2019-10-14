@@ -46,6 +46,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public BaseResult<Integer> deleteById(@RequestBody UserDTO deleteObj) {
+        BaseResult<Integer> baseResult = new BaseResult<>();
+        baseResult.setCodeSuccess();
+
+        return null;
+    }
+
+    @Override
     public BaseResult<List<UserDTO>> queryList(@RequestBody UserDTO queryObj) {
         BaseResult<List<UserDTO>> baseResult = new BaseResult<>();
         baseResult.setCode(ErrorCodeEnum.CODE_SUCCESS.getCode());

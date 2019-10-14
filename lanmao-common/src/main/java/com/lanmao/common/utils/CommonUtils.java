@@ -1,6 +1,7 @@
 package com.lanmao.common.utils;
 
 import com.lanmao.common.bean.BaseBean;
+import com.lanmao.common.constants.YesOrNoEnum;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -35,6 +36,35 @@ public class CommonUtils {
         if (StringUtils.isEmpty(record.getIsDeleted())) {
             record.setIsDeleted("N");
         }
+    }
+
+    /**
+     *
+     * 设置默认值
+     * @param record
+     */
+    public static final void setUpdateDefaultValue(BaseBean record) {
+        if (record.getGmtModified() == null) {
+            record.setGmtModified(new Date());
+        }
+        if (StringUtils.isEmpty(record.getModifier())) {
+            record.setModifier("system");
+        }
+    }
+
+    /**
+     *
+     * 设置默认值
+     * @param record
+     */
+    public static final void setDeleteDefaultValue(BaseBean record) {
+        if (record.getGmtModified() == null) {
+            record.setGmtModified(new Date());
+        }
+        if (StringUtils.isEmpty(record.getModifier())) {
+            record.setModifier("system");
+        }
+        record.setIsDeleted(YesOrNoEnum.YES.getCode());
     }
 
     /**

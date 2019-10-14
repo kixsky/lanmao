@@ -49,4 +49,9 @@ public class OrderRepository extends BaseRepository<OrderDTO> {
         CommonUtils.copyProperties(updateObject, record);
         return orderMapper.updateById(record);
     }
+
+    @Override
+    public int deleteById(OrderDTO deleteObject) {
+        return 0;
+    }
 }

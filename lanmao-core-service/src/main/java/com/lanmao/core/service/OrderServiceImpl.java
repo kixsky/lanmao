@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -19,7 +20,7 @@ public class OrderServiceImpl implements OrderService {
     private OrderRepository orderRepository;
 
     @Override
-    public BaseResult<Long> addOrder(@RequestBody OrderDTO orderDTO) {
+    public BaseResult<Long> save(@RequestBody OrderDTO orderDTO) {
         BaseResult<Long> baseResult = new BaseResult<>();
         baseResult.setCode(ErrorCodeEnum.CODE_SUCCESS.getCode());
         try {
@@ -29,5 +30,25 @@ public class OrderServiceImpl implements OrderService {
             log.error(e.getMessage(), e);
         }
         return baseResult;
+    }
+
+    @Override
+    public BaseResult<List<OrderDTO>> queryList(@RequestBody OrderDTO queryObj) {
+        return null;
+    }
+
+    @Override
+    public BaseResult<OrderDTO> queryOne(@RequestBody OrderDTO queryObj) {
+        return null;
+    }
+
+    @Override
+    public BaseResult<Integer> updateById(@RequestBody OrderDTO updateObj) {
+        return null;
+    }
+
+    @Override
+    public BaseResult<Integer> deleteById(@RequestBody OrderDTO deleteObj) {
+        return null;
     }
 }

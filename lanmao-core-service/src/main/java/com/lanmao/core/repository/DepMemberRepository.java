@@ -40,4 +40,9 @@ public class DepMemberRepository extends BaseRepository<DepMemberDO> {
     public int updateById(DepMemberDO updateObject) {
         return 0;
     }
+
+    @Override
+    public int deleteById(DepMemberDO deleteObject) {
+        return 0;
+    }
 }

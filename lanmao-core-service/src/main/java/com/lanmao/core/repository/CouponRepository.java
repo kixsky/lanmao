@@ -59,8 +59,17 @@ public class CouponRepository extends BaseRepository<CouponDTO> {
 
     @Override
     public int updateById(@NotNull CouponDTO updateObject) {
+        CommonUtils.setUpdateDefaultValue(updateObject);
         CouponDO record = new CouponDO();
         CommonUtils.copyProperties(updateObject, record);
+        return couponDAO.updateById(record);
+    }
+
+    @Override
+    public int deleteById(@NotNull CouponDTO deleteObject) {
+        CommonUtils.setUpdateDefaultValue(deleteObject);
+        CouponDO record = new CouponDO();
+        CommonUtils.copyProperties(deleteObject, record);
         return couponDAO.updateById(record);
     }
 }

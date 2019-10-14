@@ -61,4 +61,12 @@ public class UserRepository extends BaseRepository<UserDTO> {
         CommonUtils.copyProperties(updateObject, updateRecord);
         return userDAO.updateById(updateRecord);
     }
+
+    @Override
+    public int deleteById(UserDTO deleteObject) {
+        UserDO updateRecord = new UserDO();
+        CommonUtils.copyProperties(deleteObject, updateRecord);
+        CommonUtils.setDeleteDefaultValue(updateRecord);
+        return userDAO.updateById(updateRecord);
+    }
 }
