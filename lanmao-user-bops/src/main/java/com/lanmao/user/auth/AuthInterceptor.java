@@ -25,34 +25,28 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) {
-
+        log.info(req.getServletPath());
         if (!(handler instanceof HandlerMethod)) {
             return true;
         }
-
         HandlerMethod method = (HandlerMethod) handler;
         if (method.getBeanType().getAnnotation(IgnorePath.class) != null ||
             method.getMethod().getAnnotation(IgnorePath.class) != null) {
             return true;
         }
-
         String token = req.getHeader(CommonConstants.TOKEN);
         log.info("token: {}", token);
-
         //未登录
         if (StringUtils.isBlank(token)) {
             throw new BusinessException(ErrorCodeEnum.CODE_302);
         }
-
         String jsonData = redisTemplate.opsForValue().get(token);
         log.info("jsonData: {}", jsonData);
         if (StringUtils.isBlank(jsonData)) {
             throw new BusinessException(ErrorCodeEnum.CODE_302);
         }
-
         UserDTO userDto = JSON.parseObject(jsonData, UserDTO.class);
         log.info("userDto : {}", JSON.toJSONString(userDto));
-
         LoginUser user = new LoginUser();
         BeanUtils.copyProperties(userDto, user);
         LoginHolder.set(user);
