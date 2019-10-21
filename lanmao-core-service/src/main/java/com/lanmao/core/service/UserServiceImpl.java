@@ -1,5 +1,6 @@
 package com.lanmao.core.service;
 
+import com.lanmao.common.base.BaseService;
 import com.lanmao.common.bean.BaseResult;
 import com.lanmao.common.constants.ErrorCodeEnum;
 import com.lanmao.common.utils.CommonUtils;
@@ -19,7 +20,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends BaseService<UserDTO> implements UserService {
 
     @Resource
     private UserDAO userMapper;

@@ -1,5 +1,6 @@
 package com.lanmao.core.service;
 
+import com.lanmao.common.base.BaseService;
 import com.lanmao.common.bean.BaseResult;
 import com.lanmao.core.share.dto.DepMemberDTO;
 import com.lanmao.core.share.service.DepMemberService;
@@ -11,7 +12,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
-public class DepMemberServiceImpl implements DepMemberService {
+public class DepMemberServiceImpl extends BaseService<DepMemberDTO> implements DepMemberService {
 
 
     @Override

@@ -8,6 +8,7 @@ import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
 import com.google.common.collect.Maps;
+import com.lanmao.common.base.BaseService;
 import com.lanmao.common.bean.BaseResult;
 import com.lanmao.common.utils.RandomUtils;
 import com.lanmao.core.repository.SmsRepository;
@@ -88,30 +89,5 @@ public class SmsServiceImpl implements SmsService {
             return BaseResult.fail("发送失败");
         }
         return BaseResult.success("success");
-    }
-
-    @Override
-    public BaseResult<Long> save(SmsDTO saveObject) {
-        return null;
-    }
-
-    @Override
-    public BaseResult<List<SmsDTO>> queryList(@RequestBody SmsDTO queryObj) {
-        return null;
-    }
-
-    @Override
-    public BaseResult<SmsDTO> queryOne(@RequestBody SmsDTO queryObj) {
-        return null;
-    }
-
-    @Override
-    public BaseResult<Integer> updateById(SmsDTO updateObj) {
-        return null;
-    }
-
-    @Override
-    public BaseResult<Integer> deleteById(SmsDTO deleteObj) {
-        return null;
     }
 }

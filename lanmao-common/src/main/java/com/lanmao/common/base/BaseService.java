@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 
-public interface BaseService<T> {
+public abstract class BaseService<T> {
 
     /**
      *
@@ -16,7 +16,7 @@ public interface BaseService<T> {
      * @return
      */
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    BaseResult<Long> save(@RequestBody T saveObject);
+    public abstract BaseResult<Long> save(@RequestBody T saveObject);
 
 
     /**
@@ -25,7 +25,7 @@ public interface BaseService<T> {
      * @return
      */
     @RequestMapping(value = "/queryList", method = RequestMethod.POST)
-    BaseResult<List<T>> queryList(@RequestBody T queryObj);
+    public abstract BaseResult<List<T>> queryList(@RequestBody T queryObj);
 
 
     /**
@@ -34,7 +34,7 @@ public interface BaseService<T> {
      * @return
      */
     @RequestMapping(value = "/queryOne", method = RequestMethod.POST)
-    BaseResult<T> queryOne(@RequestBody T queryObj);
+    public abstract BaseResult<T> queryOne(@RequestBody T queryObj);
 
 
     /**
@@ -44,7 +44,7 @@ public interface BaseService<T> {
      * @return
      */
     @RequestMapping(value = "/updateById", method = RequestMethod.POST)
-    BaseResult<Integer> updateById(@RequestBody T updateObj);
+    public abstract BaseResult<Integer> updateById(@RequestBody T updateObj);
 
 
     /**
@@ -54,5 +54,5 @@ public interface BaseService<T> {
      * @return
      */
     @RequestMapping(value = "/deleteById", method = RequestMethod.POST)
-    BaseResult<Integer> deleteById(@RequestBody T deleteObj);
+    public abstract BaseResult<Integer> deleteById(@RequestBody T deleteObj);
 }

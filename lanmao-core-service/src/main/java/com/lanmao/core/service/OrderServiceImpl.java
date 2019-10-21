@@ -1,5 +1,6 @@
 package com.lanmao.core.service;
 
+import com.lanmao.common.base.BaseService;
 import com.lanmao.common.bean.BaseResult;
 import com.lanmao.common.constants.ErrorCodeEnum;
 import com.lanmao.core.repository.OrderRepository;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
-public class OrderServiceImpl implements OrderService {
+public class OrderServiceImpl extends BaseService<OrderDTO> implements OrderService {
 
     @Resource
     private OrderRepository orderRepository;

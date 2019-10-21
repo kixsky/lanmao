@@ -1,5 +1,6 @@
 package com.lanmao.core.service;
 
+import com.lanmao.common.base.BaseService;
 import com.lanmao.common.bean.BaseResult;
 import com.lanmao.common.constants.ErrorCodeEnum;
 import com.lanmao.core.repository.CouponRepository;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
-public class CouponServiceImpl implements CouponService {
+public class CouponServiceImpl extends BaseService<CouponDTO> implements CouponService {
 
     @Resource
     private CouponRepository couponRepository;
