@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
-public class OrderServiceImpl extends BaseService<OrderDTO> implements OrderService {
+public class OrderServiceImpl implements OrderService {
 
     @Resource
     private OrderRepository orderRepository;

@@ -6,5 +6,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @FeignClient(value = Constants.SERVICE_NAME)
 @RequestMapping(value = "/api/userAddress")
-public interface UserAddressService{
+public interface UserAddressService {
 }

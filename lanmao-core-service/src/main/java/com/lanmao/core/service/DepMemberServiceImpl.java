@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
-public class DepMemberServiceImpl extends BaseService<DepMemberDTO> implements DepMemberService {
+public class DepMemberServiceImpl implements DepMemberService {
 
 
     @Override
