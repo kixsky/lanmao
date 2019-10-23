@@ -7,7 +7,7 @@ import com.lanmao.common.bean.BaseBean;
 import lombok.Data;
 
 @Data
-@TableName("order")
+@TableName("lanmao_order")
 public class OrderDO extends BaseBean {
 
     @TableId(type = IdType.AUTO)

@@ -23,7 +23,7 @@ public class OrderRepository extends BaseRepository<OrderDTO> {
     public Long save(@NotNull OrderDTO orderDTO) {
         OrderDO record = new OrderDO();
         CommonUtils.copyProperties(orderDTO, record);
-        CommonUtils.setDefaultValue(record);
+        CommonUtils.setInsertDefaultValue(record);
         orderMapper.insert(record);
         return record.getId();
     }

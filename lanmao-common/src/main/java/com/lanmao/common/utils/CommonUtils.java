@@ -2,6 +2,7 @@ package com.lanmao.common.utils;
 
 import com.lanmao.common.bean.BaseBean;
 import com.lanmao.common.constants.YesOrNoEnum;
+import com.lanmao.common.exception.BusinessException;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -20,7 +21,7 @@ public class CommonUtils {
      * 设置默认值
      * @param record
      */
-    public static final void setDefaultValue(BaseBean record) {
+    public static final void setInsertDefaultValue(BaseBean record) {
         if (StringUtils.isEmpty(record.getCreator())) {
             record.setCreator("system");
         }
@@ -172,5 +173,17 @@ public class CommonUtils {
             logger.error(e.getMessage(), e);
         }
         return null;
+    }
+
+    /**
+     *
+     * 校验参数
+     * @param isValid
+     * @param errMsg
+     */
+    public static final void checkParams(boolean isValid, String errMsg) {
+        if (isValid) {
+            throw new BusinessException(errMsg);
+        }
     }
 }

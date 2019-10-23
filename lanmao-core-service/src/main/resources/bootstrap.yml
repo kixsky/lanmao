@@ -16,3 +16,5 @@ logging:
       lanmao:
         core:
           mapper: debug
+mybatis-plus:
+  mapper-locations: classpath*:sqlmap/*.xml

@@ -25,6 +25,7 @@ public class UserRepository extends BaseRepository<UserDTO> {
     public Long save(UserDTO saveObject) {
         UserDO record = new UserDO();
         CommonUtils.copyProperties(saveObject, record);
+        CommonUtils.setInsertDefaultValue(record);
         userDAO.insert(record);
         saveObject.setId(record.getId());
         return record.getId();

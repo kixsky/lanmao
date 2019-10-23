@@ -29,6 +29,10 @@ public class BaseResult<T> {
         return baseResult;
     }
 
+    public boolean failed() {
+        return !ErrorCodeEnum.CODE_SUCCESS.getCode().equals(this.code);
+    }
+
     public Integer getCode() {
         return code;
     }

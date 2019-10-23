@@ -7,7 +7,7 @@ import com.lanmao.common.bean.BaseBean;
 import lombok.Data;
 
 @Data
-@TableName("sms")
+@TableName("lanmao_sms")
 public class SmsDO extends BaseBean {
 
     @TableId(type = IdType.AUTO)

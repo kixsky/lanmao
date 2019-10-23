@@ -25,7 +25,7 @@ public class ProductRepository extends BaseRepository<ProductDTO> {
     public Long save(@NotNull ProductDTO saveObject) {
         ProductDO record = new ProductDO();
         CommonUtils.copyProperties(saveObject, record);
-        CommonUtils.setDefaultValue(record);
+        CommonUtils.setInsertDefaultValue(record);
         productDAO.insert(record);
         return record.getId();
     }

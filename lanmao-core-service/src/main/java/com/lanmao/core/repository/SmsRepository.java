@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Repository
 @Slf4j
@@ -25,7 +26,7 @@ public class SmsRepository extends BaseRepository<SmsDTO> {
     public Long save(SmsDTO saveObject) {
         SmsDO record = new SmsDO();
         CommonUtils.copyProperties(saveObject, record);
-        CommonUtils.setDefaultValue(record);
+        CommonUtils.setInsertDefaultValue(record);
         smsDAO.insert(record);
         return record.getId();
     }
@@ -60,5 +61,11 @@ public class SmsRepository extends BaseRepository<SmsDTO> {
     @Override
     public int deleteById(SmsDTO deleteObject) {
         return 0;
+    }
+
+    public boolean checkSms(String mobile, String smsCode) {
+        SmsDO record = smsDAO.selectLastOne(mobile);
+        if (record == null) return false;
+        return Objects.equals(smsCode, record.getCode());
     }
 }

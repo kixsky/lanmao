@@ -6,8 +6,10 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.lanmao.common.bean.BaseBean;
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
-@TableName("user")
+@TableName("lanmao_user")
 public class UserDO extends BaseBean {
 
     @TableId(type = IdType.AUTO)
@@ -22,4 +24,10 @@ public class UserDO extends BaseBean {
     private String avatar;
 
     private String address;
+
+    private Date birthday;
+
+    private String mobile;
+
+    private String openId;
 }

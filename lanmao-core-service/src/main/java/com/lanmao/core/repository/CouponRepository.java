@@ -25,7 +25,7 @@ public class CouponRepository extends BaseRepository<CouponDTO> {
     public Long save(@NotNull CouponDTO saveObject) {
         CouponDO record = new CouponDO();
         CommonUtils.copyProperties(saveObject, record);
-        CommonUtils.setDefaultValue(record);
+        CommonUtils.setInsertDefaultValue(record);
         couponDAO.insert(record);
         return record.getId();
     }

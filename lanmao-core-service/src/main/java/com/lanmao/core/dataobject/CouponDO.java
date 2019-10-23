@@ -7,7 +7,7 @@ import com.lanmao.common.bean.BaseBean;
 import lombok.Data;
 
 @Data
-@TableName("coupon")
+@TableName("lanmao_coupon")
 public class CouponDO extends BaseBean {
 
     @TableId(type = IdType.AUTO)

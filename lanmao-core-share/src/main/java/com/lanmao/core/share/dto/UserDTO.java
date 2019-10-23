@@ -3,6 +3,8 @@ package com.lanmao.core.share.dto;
 import com.lanmao.common.bean.BaseBean;
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class UserDTO extends BaseBean {
 
@@ -17,4 +19,10 @@ public class UserDTO extends BaseBean {
     private String avatar;
 
     private String address;
+
+    private Date birthday;
+
+    private String mobile;
+
+    private String openId;
 }

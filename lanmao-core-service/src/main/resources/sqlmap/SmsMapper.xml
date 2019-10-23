@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lanmao.core.mapper.SmsDAO">
+    <select id="selectLastOne" resultType="com.lanmao.core.dataobject.SmsDO">
+        select * from lanmao_sms
+        where mobile = #{mobile}
+        AND is_deleted = 'N'
+        ORDER BY gmt_created desc
+        LIMIT 1
+    </select>
+</mapper>

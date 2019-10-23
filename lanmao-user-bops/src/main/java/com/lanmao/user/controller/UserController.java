@@ -3,6 +3,7 @@ package com.lanmao.user.controller;
 import com.lanmao.common.bean.BaseResult;
 import com.lanmao.core.share.dto.UserDTO;
 import com.lanmao.core.share.service.UserService;
+import com.lanmao.user.auth.LoginHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,8 +16,16 @@ public class UserController {
     @Resource
     private UserService userService;
 
-    @RequestMapping(value = "/getUser")
-    BaseResult<UserDTO> getUser() {
-        return userService.queryOne(new UserDTO());
+    /**
+     *
+     * 获取用户信息
+     * @return
+     */
+    @RequestMapping(value = "/getUserInfo")
+    public BaseResult<UserDTO> getUser() {
+        BaseResult<UserDTO> baseResult = new BaseResult<>();
+        baseResult.setCodeSuccess();
+        baseResult.setData(LoginHolder.get());
+        return baseResult;
     }
 }

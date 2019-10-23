@@ -2,6 +2,7 @@ package com.lanmao.core.share.service;
 
 import com.lanmao.common.bean.BaseResult;
 import com.lanmao.core.share.constants.Constants;
+import com.lanmao.core.share.dto.LoginDTO;
 import com.lanmao.core.share.dto.UserDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -61,4 +62,14 @@ public interface UserService {
      */
     @RequestMapping(value = "/deleteById", method = RequestMethod.POST)
     BaseResult<Integer> deleteById(@RequestBody UserDTO deleteObj);
+
+
+    /**
+     *
+     * 用户登录
+     * @param loginDTO
+     * @return
+     */
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    BaseResult<UserDTO> login(@RequestBody LoginDTO loginDTO);
 }

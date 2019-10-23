@@ -1,15 +1,21 @@
 package com.lanmao.core.service;
 
+import com.alibaba.fastjson.JSON;
 import com.lanmao.common.base.BaseService;
 import com.lanmao.common.bean.BaseResult;
 import com.lanmao.common.constants.ErrorCodeEnum;
+import com.lanmao.common.exception.BusinessException;
 import com.lanmao.common.utils.CommonUtils;
 import com.lanmao.core.dataobject.UserDO;
 import com.lanmao.core.mapper.UserDAO;
+import com.lanmao.core.repository.SmsRepository;
 import com.lanmao.core.repository.UserRepository;
+import com.lanmao.core.share.dto.LoginDTO;
 import com.lanmao.core.share.dto.UserDTO;
 import com.lanmao.core.share.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,10 +29,10 @@ import java.util.List;
 public class UserServiceImpl extends BaseService<UserDTO> implements UserService {
 
     @Resource
-    private UserDAO userMapper;
+    private UserRepository userRepository;
 
     @Resource
-    private UserRepository userRepository;
+    private SmsRepository smsRepository;
 
     @Override
     public BaseResult<UserDTO> queryOne(@RequestBody UserDTO user) {
@@ -55,6 +61,46 @@ public class UserServiceImpl extends BaseService<UserDTO> implements UserService
     }
 
     @Override
+    public BaseResult<UserDTO> login(@RequestBody LoginDTO loginDTO) {
+        log.info("login: {}", JSON.toJSONString(loginDTO));
+        BaseResult<UserDTO> baseResult = new BaseResult<>();
+        baseResult.setCodeSuccess();
+        try {
+            CommonUtils.checkParams(StringUtils.isEmpty(loginDTO.getMobile()),
+                    "手机号不能为空");
+            CommonUtils.checkParams(StringUtils.isEmpty(loginDTO.getSmsCode()),
+                    "验证码不能为空");
+            //验证码验证
+            boolean checkSms = smsRepository.checkSms(loginDTO.getMobile(), loginDTO.getSmsCode());
+            if (!checkSms) {
+                throw new BusinessException("验证码不正确");
+            }
+            UserDTO queryDTO = new UserDTO();
+            queryDTO.setMobile(loginDTO.getMobile());
+            UserDTO loginUserDTO = userRepository.queryOne(queryDTO);
+            if (loginUserDTO == null) {
+                //当前手机号未注册,先注册
+                UserDTO newUser = new UserDTO();
+                newUser.setName(loginDTO.getMobile());
+                newUser.setMobile(loginDTO.getMobile());
+                Long newUserId = userRepository.save(newUser);
+                loginUserDTO = userRepository.queryOne(queryDTO);
+                baseResult.setData(loginUserDTO);
+            } else {
+                baseResult.setData(loginUserDTO);
+            }
+        } catch (BusinessException e) {
+            baseResult.setCode(e.getCode());
+            baseResult.setMessage(e.getMessage());
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            baseResult.setCode(ErrorCodeEnum.CODE_FAIL.getCode());
+            baseResult.setMessage(e.getMessage());
+        }
+        return baseResult;
+    }
+
+    @Override
     public BaseResult<List<UserDTO>> queryList(@RequestBody UserDTO queryObj) {
         BaseResult<List<UserDTO>> baseResult = new BaseResult<>();
         baseResult.setCode(ErrorCodeEnum.CODE_SUCCESS.getCode());
@@ -67,11 +113,8 @@ public class UserServiceImpl extends BaseService<UserDTO> implements UserService
         BaseResult<Long> baseResult = new BaseResult<>();
         baseResult.setCode(ErrorCodeEnum.CODE_SUCCESS.getCode());
         try {
-            UserDO userDO = new UserDO();
-            BeanUtils.copyProperties(userDTO,userDO);
-            CommonUtils.setDefaultValue(userDO);
-            userMapper.insert(userDO);
-            baseResult.setData(userDO.getId());
+            Long newId = userRepository.save(userDTO);
+            baseResult.setData(newId);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
