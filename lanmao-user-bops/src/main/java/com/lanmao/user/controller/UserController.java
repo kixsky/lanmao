@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 
 @RestController
 @RequestMapping(value = "/v1/user")
@@ -28,4 +29,16 @@ public class UserController {
         baseResult.setData(LoginHolder.get());
         return baseResult;
     }
+
+
+    /**
+     *
+     * 查询余额
+     * @return
+     */
+    @RequestMapping(value = "/getBalance")
+    public BaseResult<BigDecimal> getBalance() {
+        return userService.queryBalance(LoginHolder.get());
+    }
+
 }

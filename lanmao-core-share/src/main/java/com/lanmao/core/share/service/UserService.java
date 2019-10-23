@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @FeignClient(value = Constants.SERVICE_NAME)
@@ -72,4 +73,14 @@ public interface UserService {
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     BaseResult<UserDTO> login(@RequestBody LoginDTO loginDTO);
+
+
+    /**
+     *
+     * 查询用户余额
+     * @param userDTO
+     * @return
+     */
+    @RequestMapping(value = "/queryBalance", method = RequestMethod.POST)
+    BaseResult<BigDecimal>  queryBalance(@RequestBody UserDTO userDTO);
 }

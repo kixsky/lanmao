@@ -1,38 +1,40 @@
 package com.lanmao.core.service;
 
 import com.alibaba.fastjson.JSON;
-import com.lanmao.common.base.BaseService;
+import com.lanmao.common.base.BaseRepository;
 import com.lanmao.common.bean.BaseResult;
 import com.lanmao.common.constants.ErrorCodeEnum;
 import com.lanmao.common.exception.BusinessException;
 import com.lanmao.common.utils.CommonUtils;
-import com.lanmao.core.dataobject.UserDO;
-import com.lanmao.core.mapper.UserDAO;
 import com.lanmao.core.repository.SmsRepository;
 import com.lanmao.core.repository.UserRepository;
+import com.lanmao.core.repository.UserWalletRepository;
 import com.lanmao.core.share.dto.LoginDTO;
 import com.lanmao.core.share.dto.UserDTO;
+import com.lanmao.core.share.dto.UserWalletDTO;
 import com.lanmao.core.share.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
 @RestController
 @Slf4j
-public class UserServiceImpl extends BaseService<UserDTO> implements UserService {
+public class UserServiceImpl implements UserService {
 
     @Resource
     private UserRepository userRepository;
 
     @Resource
     private SmsRepository smsRepository;
+
+    @Resource
+    private UserWalletRepository userWalletRepository;
 
     @Override
     public BaseResult<UserDTO> queryOne(@RequestBody UserDTO user) {
@@ -96,6 +98,20 @@ public class UserServiceImpl extends BaseService<UserDTO> implements UserService
             log.error(e.getMessage(), e);
             baseResult.setCode(ErrorCodeEnum.CODE_FAIL.getCode());
             baseResult.setMessage(e.getMessage());
+        }
+        return baseResult;
+    }
+
+    @Override
+    public BaseResult<BigDecimal> queryBalance(@RequestBody UserDTO userDTO) {
+        BaseResult<BigDecimal> baseResult = new BaseResult<>();
+        baseResult.setCodeSuccess();
+        CommonUtils.checkParams(userDTO.getId() == null, "用户Id不能为空");
+        UserWalletDTO  userWalletDTO = userWalletRepository.getUserWallet(userDTO.getId());
+        if (userWalletDTO == null) {
+            baseResult.setData(BigDecimal.ZERO);
+        } else {
+            baseResult.setData(userWalletDTO.getBalance());
         }
         return baseResult;
     }
