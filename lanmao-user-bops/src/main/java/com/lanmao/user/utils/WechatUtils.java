@@ -1,7 +1,6 @@
 package com.lanmao.user.utils;
 
 import com.alibaba.fastjson.JSON;
-import com.lanmao.user.constant.Constant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
@@ -13,12 +12,32 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 @Slf4j
+@Component
 public class WechatUtils {
+
+    @Value("mp.app.id")
+    private String mpAppId;
+
+    @Value("mp.app.secret")
+    private String mpAppSecret;
+
+    @Value(("pay.mch.id"))
+    private String payMchId;
+
+    @Value("pay.api.key")
+    private String payApiKey;
 
     /**
      *
@@ -26,22 +45,19 @@ public class WechatUtils {
      * @param jsCode
      * @return
      */
-    public static WxAuthInfo getWxAuthInfo(String jsCode) {
+    public WxAuthInfo getWxAuthInfo(String jsCode) {
 
         String url = "https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code";
-        String enUrl = String.format(url, Constant.APP_ID, Constant.APP_SECRET, jsCode);
+        String enUrl = String.format(url, mpAppId, mpAppSecret, jsCode);
         try {
             URL url2 = new URL(enUrl);
             String content = IOUtils.toString(url2);
             log.info("getWxAuthInfo: {}", content);
-
             WxAuthInfo wxAuthInfo = JSON.parseObject(content, WxAuthInfo.class);
             return wxAuthInfo;
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return null;
     }
 
@@ -86,11 +102,11 @@ public class WechatUtils {
      * 微信预下单
      * @param payParams
      */
-    public static Map<String, String> preOrder(WechatPayParams payParams) {
+    public Map<String, String> preOrder(WechatPayParams payParams) {
 
         Map<String, String> preOrderMap = new HashMap<>();
-        preOrderMap.put("appid", Constant.APP_ID);
-        preOrderMap.put("mch_id", Constant.MCH_ID);
+        preOrderMap.put("appid", mpAppId);
+        preOrderMap.put("mch_id", payMchId);
         preOrderMap.put("nonce_str", createNoncestr(32));
         preOrderMap.put("body", payParams.getBody());
         preOrderMap.put("detail", payParams.getDetail());
@@ -100,7 +116,7 @@ public class WechatUtils {
         preOrderMap.put("notify_url", payParams.getNotifyUrl());
         preOrderMap.put("trade_type", "JSAPI");
         preOrderMap.put("openid", payParams.getOpenId());
-        preOrderMap.put("sign", sign(preOrderMap, Constant.API_KEY));
+        preOrderMap.put("sign", sign(preOrderMap, payApiKey));
         log.info("preOrderMap: {}", JSON.toJSONString(preOrderMap));
 
         HttpPost httpPost = new HttpPost("https://api.mch.weixin.qq.com/pay/unifiedorder");
@@ -128,12 +144,12 @@ public class WechatUtils {
                     && "SUCCESS".equalsIgnoreCase(return_code)) {
 
                 Map<String, String> result = new HashMap<>();
-                result.put("appid", Constant.APP_ID);
+                result.put("appid", mpAppId);
                 result.put("package", "prepay_id=" + params.get("prepay_id"));
                 result.put("nonceStr", createNoncestr(32));
                 result.put("timeStamp", String.valueOf(System.currentTimeMillis()).substring(0, 10));
                 result.put("signType", "MD5");
-                result.put("paySign", sign(result, Constant.API_KEY));
+                result.put("paySign", sign(result, payApiKey));
 
                 log.info("result: {}", JSON.toJSONString(result));
                 return result;
@@ -141,15 +157,13 @@ public class WechatUtils {
         } catch (Exception e) {
             log.info("微信预下单失败", e);
         }
-
         return null;
     }
 
 
-    public static boolean validateSign(Map<String, String> params) {
+    public boolean validateSign(Map<String, String> params) {
         String returnedSign = params.get("sign");
-        String generatedSign = sign(params, Constant.API_KEY);
-
+        String generatedSign = sign(params, payApiKey);
         return generatedSign.equals(returnedSign);
     }
 }
