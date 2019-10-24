@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.lanmao.common.bean.BaseBean;
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Data
 @TableName("lanmao_user_charge_record")
 public class UserChargeRecordDO extends BaseBean {
@@ -16,6 +18,8 @@ public class UserChargeRecordDO extends BaseBean {
     private Long userId;
 
     private Long packageId;
+
+    private BigDecimal payAmount;
 
     private String tradeNo;
 
