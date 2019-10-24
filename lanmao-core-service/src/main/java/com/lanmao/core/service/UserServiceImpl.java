@@ -5,14 +5,8 @@ import com.lanmao.common.bean.BaseResult;
 import com.lanmao.common.constants.ErrorCodeEnum;
 import com.lanmao.common.exception.BusinessException;
 import com.lanmao.common.utils.CommonUtils;
-import com.lanmao.core.repository.ChargePackageRepository;
-import com.lanmao.core.repository.SmsRepository;
-import com.lanmao.core.repository.UserRepository;
-import com.lanmao.core.repository.UserWalletRepository;
-import com.lanmao.core.share.dto.ChargePackageDTO;
-import com.lanmao.core.share.dto.LoginDTO;
-import com.lanmao.core.share.dto.UserDTO;
-import com.lanmao.core.share.dto.UserWalletDTO;
+import com.lanmao.core.repository.*;
+import com.lanmao.core.share.dto.*;
 import com.lanmao.core.share.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -39,6 +33,9 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private ChargePackageRepository chargePackageRepository;
+
+    @Resource
+    private UserChargeRecordRepository userChargeRecordRepository;
 
     @Override
     public BaseResult<UserDTO> queryOne(@RequestBody UserDTO user) {
@@ -126,6 +123,16 @@ public class UserServiceImpl implements UserService {
         baseResult.setCodeSuccess();
         List<ChargePackageDTO> list = chargePackageRepository.queryList(chargePackageDTO);
         baseResult.setData(list);
+        return baseResult;
+    }
+
+    @Override
+    public BaseResult<UserChargeRecordDTO> bookCharge(@RequestBody UserChargeRecordDTO bookParams) {
+        BaseResult<UserChargeRecordDTO> baseResult = new BaseResult<>();
+        baseResult.setCodeSuccess();
+        Long newId = userChargeRecordRepository.save(bookParams);
+        UserChargeRecordDTO newDTO = userChargeRecordRepository.queryById(newId);
+        baseResult.setData(newDTO);
         return baseResult;
     }
 

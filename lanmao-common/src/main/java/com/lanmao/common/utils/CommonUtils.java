@@ -12,6 +12,8 @@ import org.springframework.beans.BeanUtils;
 import java.lang.reflect.Field;
 import java.util.*;
 
+import static com.lanmao.common.utils.DateUtils.YYYYMMDDHHMMSS;
+
 public class CommonUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(CommonUtils.class);
@@ -185,5 +187,15 @@ public class CommonUtils {
         if (isValid) {
             throw new BusinessException(errMsg);
         }
+    }
+
+
+    /**
+     *
+     * 生成订单号
+     * @return
+     */
+    public static String genOrderNo() {
+        return DateUtils.format(new Date(), YYYYMMDDHHMMSS) + RandomUtils.randomNumber(4);
     }
 }

@@ -4,9 +4,11 @@ import com.lanmao.common.bean.BaseResult;
 import com.lanmao.core.share.constants.Constants;
 import com.lanmao.core.share.dto.ChargePackageDTO;
 import com.lanmao.core.share.dto.LoginDTO;
+import com.lanmao.core.share.dto.UserChargeRecordDTO;
 import com.lanmao.core.share.dto.UserDTO;
 import javafx.scene.chart.ValueAxis;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -95,4 +97,14 @@ public interface UserService {
      */
     @RequestMapping(value = "/queryChargePackages", method = RequestMethod.POST)
     BaseResult<List<ChargePackageDTO>> queryChargePackages(@RequestBody ChargePackageDTO chargePackageDTO);
+
+
+    /**
+     *
+     * 充值下单
+     * @param bookParams
+     * @return
+     */
+    @RequestMapping(value = "/bookCharge", method = RequestMethod.POST)
+    BaseResult<UserChargeRecordDTO> bookCharge(@RequestBody UserChargeRecordDTO bookParams);
 }

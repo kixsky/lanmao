@@ -5,5 +5,8 @@
         SELECT *
         FROM lanmao_charge_package
         where is_deleted = 'N'
+        <if test="id != null">
+            AND id = #{id}
+        </if>
     </select>
 </mapper>
