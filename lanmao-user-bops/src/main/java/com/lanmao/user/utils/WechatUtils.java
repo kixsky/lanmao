@@ -114,7 +114,7 @@ public class WechatUtils {
         preOrderMap.put("total_fee", String.valueOf(payParams.getTotalFee()));
         preOrderMap.put("spbill_create_ip", payParams.getSpbillCreateIp());
         preOrderMap.put("notify_url", payParams.getNotifyUrl());
-        preOrderMap.put("trade_type", "JSAPI");
+        preOrderMap.put("trade_type", "MWEB");
         preOrderMap.put("openid", payParams.getOpenId());
         preOrderMap.put("sign", sign(preOrderMap, payApiKey));
         log.info("preOrderMap: {}", JSON.toJSONString(preOrderMap));
