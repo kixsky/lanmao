@@ -1,14 +1,15 @@
 package com.lanmao.core.service;
 
 import com.alibaba.fastjson.JSON;
-import com.lanmao.common.base.BaseRepository;
 import com.lanmao.common.bean.BaseResult;
 import com.lanmao.common.constants.ErrorCodeEnum;
 import com.lanmao.common.exception.BusinessException;
 import com.lanmao.common.utils.CommonUtils;
+import com.lanmao.core.repository.ChargePackageRepository;
 import com.lanmao.core.repository.SmsRepository;
 import com.lanmao.core.repository.UserRepository;
 import com.lanmao.core.repository.UserWalletRepository;
+import com.lanmao.core.share.dto.ChargePackageDTO;
 import com.lanmao.core.share.dto.LoginDTO;
 import com.lanmao.core.share.dto.UserDTO;
 import com.lanmao.core.share.dto.UserWalletDTO;
@@ -35,6 +36,9 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private UserWalletRepository userWalletRepository;
+
+    @Resource
+    private ChargePackageRepository chargePackageRepository;
 
     @Override
     public BaseResult<UserDTO> queryOne(@RequestBody UserDTO user) {
@@ -113,6 +117,15 @@ public class UserServiceImpl implements UserService {
         } else {
             baseResult.setData(userWalletDTO.getBalance());
         }
+        return baseResult;
+    }
+
+    @Override
+    public BaseResult<List<ChargePackageDTO>> queryChargePackages(@RequestBody ChargePackageDTO chargePackageDTO) {
+        BaseResult<List<ChargePackageDTO>> baseResult = new BaseResult<>();
+        baseResult.setCodeSuccess();
+        List<ChargePackageDTO> list = chargePackageRepository.queryList(chargePackageDTO);
+        baseResult.setData(list);
         return baseResult;
     }
 

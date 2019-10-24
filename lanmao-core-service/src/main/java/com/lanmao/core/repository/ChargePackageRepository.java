@@ -1,6 +1,8 @@
 package com.lanmao.core.repository;
 
 import com.lanmao.common.base.BaseRepository;
+import com.lanmao.common.utils.CommonUtils;
+import com.lanmao.core.dataobject.ChargePackageDO;
 import com.lanmao.core.mapper.ChargePackageDAO;
 import com.lanmao.core.share.dto.ChargePackageDTO;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +20,11 @@ public class ChargePackageRepository extends BaseRepository<ChargePackageDTO> {
 
     @Override
     public Long save(ChargePackageDTO saveObject) {
-        return null;
+        CommonUtils.setInsertDefaultValue(saveObject);
+        ChargePackageDO record = new ChargePackageDO();
+        CommonUtils.copyProperties(saveObject, record);
+        chargePackageDAO.insert(record);
+        return record.getId();
     }
 
     @Override
@@ -28,7 +34,10 @@ public class ChargePackageRepository extends BaseRepository<ChargePackageDTO> {
 
     @Override
     public List<ChargePackageDTO> queryList(ChargePackageDTO query) {
-        return null;
+        ChargePackageDO record = new ChargePackageDO();
+        CommonUtils.copyProperties(query, record);
+        List<ChargePackageDO> list = chargePackageDAO.selectList(record);
+        return CommonUtils.convertList(list, ChargePackageDTO.class);
     }
 
     @Override

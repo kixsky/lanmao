@@ -2,8 +2,10 @@ package com.lanmao.core.share.service;
 
 import com.lanmao.common.bean.BaseResult;
 import com.lanmao.core.share.constants.Constants;
+import com.lanmao.core.share.dto.ChargePackageDTO;
 import com.lanmao.core.share.dto.LoginDTO;
 import com.lanmao.core.share.dto.UserDTO;
+import javafx.scene.chart.ValueAxis;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -83,4 +85,14 @@ public interface UserService {
      */
     @RequestMapping(value = "/queryBalance", method = RequestMethod.POST)
     BaseResult<BigDecimal>  queryBalance(@RequestBody UserDTO userDTO);
+
+
+    /**
+     *
+     * 查询充值套餐
+     * @param chargePackageDTO
+     * @return
+     */
+    @RequestMapping(value = "/queryChargePackages", method = RequestMethod.POST)
+    BaseResult<List<ChargePackageDTO>> queryChargePackages(@RequestBody ChargePackageDTO chargePackageDTO);
 }

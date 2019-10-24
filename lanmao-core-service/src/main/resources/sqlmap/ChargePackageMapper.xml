@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lanmao.core.mapper.ChargePackageDAO">
+    <select id="selectList" resultType="com.lanmao.core.dataobject.ChargePackageDO">
+        SELECT *
+        FROM lanmao_charge_package
+        where is_deleted = 'N'
+    </select>
 </mapper>
