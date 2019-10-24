@@ -54,7 +54,18 @@
       <artifactId>spring-webmvc</artifactId>
       <version>5.2.0.RELEASE</version>
     </dependency>
-
+    <!-- httpclient -->
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>4.5.10</version>
+    </dependency>
+    <!-- Xml -->
+    <dependency>
+      <groupId>dom4j</groupId>
+      <artifactId>dom4j</artifactId>
+      <version>1.6.1</version>
+    </dependency>
   </dependencies>
 
   <build>
