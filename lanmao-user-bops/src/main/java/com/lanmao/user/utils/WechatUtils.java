@@ -27,16 +27,16 @@ import java.util.Random;
 @Component
 public class WechatUtils {
 
-    @Value("mp.app.id")
+    @Value("${mp.app.id}")
     private String mpAppId;
 
-    @Value("mp.app.secret")
+    @Value("${mp.app.secret}")
     private String mpAppSecret;
 
-    @Value(("pay.mch.id"))
+    @Value(("${pay.mch.id}"))
     private String payMchId;
 
-    @Value("pay.api.key")
+    @Value("${pay.api.key}")
     private String payApiKey;
 
     /**
