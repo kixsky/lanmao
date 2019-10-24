@@ -47,7 +47,7 @@ public class WechatUtils {
      */
     public WxAuthInfo getWxAuthInfo(String jsCode) {
 
-        String url = "https://api.weixin.qq.com/sns/oauth2?appid=%s&secret=%s&code=%s&grant_type=authorization_code";
+        String url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code";
         String enUrl = String.format(url, mpAppId, mpAppSecret, jsCode);
         try {
             URL url2 = new URL(enUrl);
