@@ -22,6 +22,15 @@ public class MechServiceImpl implements MechService {
     private MechRepository mechRepository;
 
     @Override
+    public BaseResult<Long> save(@RequestBody MechDTO mechDTO) {
+        BaseResult<Long> baseResult = new BaseResult<>();
+        baseResult.setCodeSuccess();
+        Long newId = mechRepository.save(mechDTO);
+        baseResult.setData(newId);
+        return baseResult;
+    }
+
+    @Override
     public BaseResult<PageDTO<MechDTO>> queryPage(@RequestBody PageDTO<MechDTO> pageDTO) {
         log.info("pageDTO: {}", JSON.toJSONString(pageDTO));
         BaseResult<PageDTO<MechDTO>> baseResult = new BaseResult<>();

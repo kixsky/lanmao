@@ -16,6 +16,15 @@ public interface MechService {
 
     /**
      *
+     * 保存技师
+     * @param mechDTO
+     * @return
+     */
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    BaseResult<Long> save(@RequestBody MechDTO mechDTO);
+
+    /**
+     *
      * 查询技师
      * @param pageDTO
      * @return

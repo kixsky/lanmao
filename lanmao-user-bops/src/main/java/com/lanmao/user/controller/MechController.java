@@ -1,6 +1,5 @@
 package com.lanmao.user.controller;
 
-import com.lanmao.common.base.BaseRepository;
 import com.lanmao.common.bean.BaseResult;
 import com.lanmao.common.bean.PageDTO;
 import com.lanmao.core.share.dto.MechDTO;
