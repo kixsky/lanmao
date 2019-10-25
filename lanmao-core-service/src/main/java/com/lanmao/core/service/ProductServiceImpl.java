@@ -58,7 +58,7 @@ public class ProductServiceImpl implements ProductService {
         final Integer page = pageDTO.getPage();
         final Integer pageSize = pageDTO.getPageSize();
         params.setOffset((page - 1) * pageSize);
-        params.setOffset(pageSize);
+        params.setLimit(pageSize);
         List<ProductDTO> list = productRepository.queryList(params);
         final Integer totalCount = productRepository.countQueryList(params);
         pageDTO.setList(list);

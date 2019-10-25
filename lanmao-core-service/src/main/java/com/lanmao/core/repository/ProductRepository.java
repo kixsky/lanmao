@@ -43,8 +43,9 @@ public class ProductRepository extends BaseRepository<ProductDTO> {
 
     @Override
     public List<ProductDTO> queryList(@NotNull ProductDTO query) {
-        Map<String, Object> objMap = CommonUtils.toQueryMap(query);
-        List<ProductDO> list = productDAO.selectByMap(objMap);
+        ProductDO record = new ProductDO();
+        CommonUtils.copyProperties(query, record);
+        List<ProductDO> list = productDAO.selectList(record);
         return CommonUtils.convertList(list, ProductDTO.class);
     }
 

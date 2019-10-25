@@ -1,5 +1,6 @@
 package com.lanmao.user.controller;
 
+import com.lanmao.common.annotation.IgnorePath;
 import com.lanmao.common.bean.BaseResult;
 import com.lanmao.common.bean.PageDTO;
 import com.lanmao.core.share.dto.ProductDTO;
@@ -26,6 +27,7 @@ public class ProductController {
      * @param queryParams
      * @return
      */
+    @IgnorePath
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     public BaseResult<PageDTO<ProductDTO>> list(@RequestBody PageDTO<ProductDTO> queryParams) {
         return productService.queryPage(queryParams);
