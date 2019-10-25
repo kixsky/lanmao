@@ -4,11 +4,14 @@ import com.alibaba.fastjson.JSON;
 import com.lanmao.common.bean.BaseResult;
 import com.lanmao.common.bean.PageDTO;
 import com.lanmao.common.exception.BusinessException;
+import com.lanmao.core.repository.MechProductRepository;
 import com.lanmao.core.repository.MechRepository;
 import com.lanmao.core.share.dto.MechDTO;
+import com.lanmao.core.share.dto.ProductDTO;
 import com.lanmao.core.share.service.MechService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -20,6 +23,9 @@ public class MechServiceImpl implements MechService {
 
     @Resource
     private MechRepository mechRepository;
+
+    @Resource
+    private MechProductRepository mechProductRepository;
 
     @Override
     public BaseResult<Long> save(@RequestBody MechDTO mechDTO) {
@@ -58,6 +64,15 @@ public class MechServiceImpl implements MechService {
         pageDTO.setList(list);
         pageDTO.setTotalCount(totalCount);
         baseResult.setData(pageDTO);
+        return baseResult;
+    }
+
+    @Override
+    public BaseResult<List<ProductDTO>> queryProduct(@RequestParam("mechId") Long mechId) {
+        BaseResult<List<ProductDTO>> baseResult = new BaseResult<>();
+        baseResult.setCodeSuccess();
+        List<ProductDTO> list = mechProductRepository.queryMechProduct(mechId);
+        baseResult.setData(list);
         return baseResult;
     }
 }

@@ -1,6 +1,7 @@
 package com.lanmao.core.share.service;
 
 import com.lanmao.common.bean.BaseResult;
+import com.lanmao.common.bean.PageDTO;
 import com.lanmao.core.share.constants.Constants;
 import com.lanmao.core.share.dto.CouponDTO;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -13,8 +14,6 @@ import java.util.List;
 @FeignClient(value = Constants.SERVICE_NAME)
 @RequestMapping(value = "/api/coupon")
 public interface CouponService {
-
-
 
 
     /**
@@ -63,4 +62,14 @@ public interface CouponService {
      */
     @RequestMapping(value = "/deleteById", method = RequestMethod.POST)
     BaseResult<Integer> deleteById(@RequestBody CouponDTO deleteObj);
+
+
+    /**
+     *
+     * 分页查询
+     * @param pageDTO
+     * @return
+     */
+    @RequestMapping(value = "/queryPage", method = RequestMethod.POST)
+    BaseResult<PageDTO<CouponDTO>> queryPage(@RequestBody PageDTO<CouponDTO> pageDTO);
 }

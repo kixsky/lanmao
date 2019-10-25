@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lanmao.core.mapper.MechProductDAO">
+    <select id="selectList" resultType="com.lanmao.core.dataobject.MechProductDO">
+        SELECT *
+        FROM lanmao_mech_product
+        WHERE is_deleted = 'N'
+        <if test="mechId != null">
+            AND mech_id = #{mechId}
+        </if>
+        <if test="productId != null">
+            AND product_id = #{productId}
+        </if>
+    </select>
+    <select id="selectProduct" resultType="com.lanmao.core.dataobject.ProductDO">
+        SELECT *
+        FROM lanmao_product
+        WHERE
+        id IN (
+        SELECT product_id
+        FROM lanmao_mech_product
+        WHERE mech_id = #{mechId}
+        AND is_deleted = 'N'
+        ) AND is_deleted = 'N'
+    </select>
+</mapper>

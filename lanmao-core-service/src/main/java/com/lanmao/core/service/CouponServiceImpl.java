@@ -1,6 +1,7 @@
 package com.lanmao.core.service;
 
 import com.lanmao.common.bean.BaseResult;
+import com.lanmao.common.bean.PageDTO;
 import com.lanmao.common.constants.ErrorCodeEnum;
 import com.lanmao.core.repository.CouponRepository;
 import com.lanmao.core.share.dto.CouponDTO;
@@ -51,6 +52,11 @@ public class CouponServiceImpl implements CouponService {
 
     @Override
     public BaseResult<Integer> deleteById(@RequestBody CouponDTO deleteObj) {
+        return null;
+    }
+
+    @Override
+    public BaseResult<PageDTO<CouponDTO>> queryPage(@RequestBody PageDTO<CouponDTO> pageDTO) {
         return null;
     }
 }
