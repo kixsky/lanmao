@@ -31,6 +31,15 @@ public abstract class BaseRepository<T> {
 
 
     /**
+     * 查询count
+     * @param query
+     * @return
+     */
+    public int countQueryList(T query) {
+        return 0;
+    }
+
+    /**
      *
      * 查询对象
      * @param query

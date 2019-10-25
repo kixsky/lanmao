@@ -49,6 +49,13 @@ public class ProductRepository extends BaseRepository<ProductDTO> {
     }
 
     @Override
+    public int countQueryList(ProductDTO query) {
+        ProductDO record = new ProductDO();
+        CommonUtils.copyProperties(query, record);
+        return productDAO.countSelectList(record);
+    }
+
+    @Override
     public ProductDTO queryOne(ProductDTO query) {
         List<ProductDTO> list = queryList(query);
         if (CollectionUtils.isNotEmpty(list)) {

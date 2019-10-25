@@ -1,6 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lanmao.core.mapper.CouponDAO">
-
-
+<mapper namespace="com.lanmao.core.mapper.ProductDAO">
+    <select id="selectList" resultType="com.lanmao.core.dataobject.ProductDO">
+        SELECT *
+        FROM lanmao_product
+        WHERE is_deleted = 'N'
+        <if test="name != null">
+            AND name = #{name}
+        </if>
+        <if test="price != null">
+            AND price = #{price}
+        </if>
+        <if test="sellPrice != null">
+            AND sell_price = #{sellPrice}
+        </if>
+        <if test="imageUrl != null">
+            AND image_url = #{imageUrl}
+        </if>
+        <if test="duration != null">
+            AND duration = #{duration}
+        </if>
+        <if test="status != null">
+            AND status = #{status}
+        </if>
+        <if test="isRec != null">
+            AND is_rec = #{isRec}
+        </if>
+        <if test="isNew != null">
+            AND is_new = #{isNew}
+        </if>
+        <if test="offset != null">
+            <if test="limit != null">
+                limit #{offset},#{limit}
+            </if>
+        </if>
+    </select>
+    <select id="countSelectList" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM lanmao_product
+        WHERE is_deleted = 'N'
+        <if test="name != null">
+            AND name = #{name}
+        </if>
+        <if test="price != null">
+            AND price = #{price}
+        </if>
+        <if test="sellPrice != null">
+            AND sell_price = #{sellPrice}
+        </if>
+        <if test="imageUrl != null">
+            AND image_url = #{imageUrl}
+        </if>
+        <if test="duration != null">
+            AND duration = #{duration}
+        </if>
+        <if test="status != null">
+            AND status = #{status}
+        </if>
+        <if test="isRec != null">
+            AND is_rec = #{isRec}
+        </if>
+        <if test="isNew != null">
+            AND is_new = #{isNew}
+        </if>
+    </select>
 </mapper>
