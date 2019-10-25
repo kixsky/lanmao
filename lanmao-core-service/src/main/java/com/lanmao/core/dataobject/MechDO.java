@@ -24,12 +24,6 @@ public class MechDO extends BaseBean {
 
     private String jobNum;
 
-    private Long mchId;
-
-    private String loginName;
-
-    private String password;
-
     private String address;
 
     private String nativeAddress;
