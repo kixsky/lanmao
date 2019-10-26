@@ -52,7 +52,6 @@ public class DepMemberController {
         redisTemplate.opsForValue().set(accessToken, JSON.toJSONString(depMemberDTO));
         Cookie cookie = new Cookie(CommonConstants.ACCESS_TOKEN, accessToken);
         cookie.setMaxAge(30 * 12 * 3600);
-        cookie.setDomain("/");
         response.addCookie(cookie);
         baseResult.setData(accessToken);
         return baseResult;
