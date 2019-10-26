@@ -12,4 +12,8 @@ public class DepMemberDO extends BaseBean {
 
     @TableId(type = IdType.AUTO)
     private Long id;
+
+    private String loginName;
+
+    private String password;
 }

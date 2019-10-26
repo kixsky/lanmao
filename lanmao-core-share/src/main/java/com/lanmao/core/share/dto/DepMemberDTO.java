@@ -5,4 +5,12 @@ import lombok.Data;
 
 @Data
 public class DepMemberDTO extends BaseBean {
+
+    private Long id;
+
+    private String name;
+
+    private String loginName;
+
+    private String password;
 }

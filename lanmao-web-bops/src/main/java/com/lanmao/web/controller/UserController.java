@@ -18,11 +18,6 @@ public class UserController {
     @Resource
     private UserService userService;
 
-    @RequestMapping(value = "/getUser")
-    BaseResult<UserDTO> getUser() {
-        return userService.queryOne(new UserDTO());
-    }
-
     /**
      *
      * 分页查询

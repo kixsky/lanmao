@@ -22,7 +22,7 @@ public interface DepMemberService {
      * @return
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    BaseResult<String> login(@RequestBody DepMemberDTO depMemberDTO);
+    BaseResult<DepMemberDTO> login(@RequestBody DepMemberDTO depMemberDTO);
 
 
 
