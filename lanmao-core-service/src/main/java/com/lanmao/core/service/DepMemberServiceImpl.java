@@ -36,6 +36,9 @@ public class DepMemberServiceImpl implements DepMemberService {
         DepMemberDTO queryDTO = new DepMemberDTO();
         queryDTO.setLoginName(loginName);
         DepMemberDTO depMemberDTO = depMemberRepository.queryOne(queryDTO);
+        if (depMemberDTO == null) {
+            throw new BusinessException("用户不存在");
+        }
         String md5Password = MD5Utils.getMD5(password);
         if (!md5Password.equals(depMemberDTO.getPassword())) {
             throw new BusinessException("密码不正确");
