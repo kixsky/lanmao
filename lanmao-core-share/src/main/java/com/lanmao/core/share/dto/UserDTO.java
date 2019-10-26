@@ -25,4 +25,8 @@ public class UserDTO extends BaseBean {
     private String mobile;
 
     private String openId;
+
+    private Integer offset;
+
+    private Integer limit;
 }

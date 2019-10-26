@@ -2,6 +2,7 @@ package com.lanmao.core.service;
 
 import com.alibaba.fastjson.JSON;
 import com.lanmao.common.bean.BaseResult;
+import com.lanmao.common.bean.PageDTO;
 import com.lanmao.common.constants.ErrorCodeEnum;
 import com.lanmao.common.exception.BusinessException;
 import com.lanmao.common.utils.CommonUtils;
@@ -133,6 +134,34 @@ public class UserServiceImpl implements UserService {
         Long newId = userChargeRecordRepository.save(bookParams);
         UserChargeRecordDTO newDTO = userChargeRecordRepository.queryById(newId);
         baseResult.setData(newDTO);
+        return baseResult;
+    }
+
+    @Override
+    public BaseResult<PageDTO<UserDTO>> queryPage(@RequestBody PageDTO<UserDTO> pageDTO) {
+        BaseResult<PageDTO<UserDTO>> baseResult = new BaseResult<>();
+        baseResult.setCodeSuccess();
+        UserDTO params = pageDTO.getParams();
+        if (params != null) {
+            params = new UserDTO();
+            pageDTO.setParams(params);
+        }
+        if (pageDTO.getPage() == null) {
+            pageDTO.setPage(1);
+        }
+        if (pageDTO.getPageSize() == null){
+            pageDTO.setPageSize(10);
+        }
+        final Integer page = pageDTO.getPage();
+        final Integer pageSize = pageDTO.getPageSize();
+        final Integer offset = (page - 1) * pageSize;
+        params.setOffset(offset);
+        params.setLimit(pageSize);
+        List<UserDTO> list = userRepository.queryList(params);
+        int totalCount = userRepository.countQueryList(params);
+        pageDTO.setTotalCount(totalCount);
+        pageDTO.setList(list);
+        baseResult.setData(pageDTO);
         return baseResult;
     }
 

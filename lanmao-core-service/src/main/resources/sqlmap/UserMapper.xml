@@ -1,4 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lanmao.core.mapper.UserDAO">
+    <select id="selectList" resultType="com.lanmao.core.dataobject.UserDO">
+        SELECT *
+        FROM lanmao_user
+        WHERE is_deleted = 'N'
+        <if test="id != null">
+            AND id = #{id}
+        </if>
+        <if test="userNo != null">
+            AND user_no = #{userNo}
+        </if>
+        <if test="name != null">
+            AND name = #{name}
+        </if>
+        <if test="gender != null">
+            AND gender = #{gender}
+        </if>
+        <if test="avatar != null">
+            AND avatar = #{avatar}
+        </if>
+        <if test="mobile != null">
+            AND mobile = #{mobile}
+        </if>
+        <if test="offset != null">
+            <if test="limit != null">
+                LIMIT #{offset},#{limit}
+            </if>
+        </if>
+    </select>
+    <select id="countSelectList" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM lanmao_user
+        WHERE is_deleted = 'N'
+        <if test="id != null">
+            AND id = #{id}
+        </if>
+        <if test="userNo != null">
+            AND user_no = #{userNo}
+        </if>
+        <if test="name != null">
+            AND name = #{name}
+        </if>
+        <if test="gender != null">
+            AND gender = #{gender}
+        </if>
+        <if test="avatar != null">
+            AND avatar = #{avatar}
+        </if>
+        <if test="mobile != null">
+            AND mobile = #{mobile}
+        </if>
+    </select>
 </mapper>

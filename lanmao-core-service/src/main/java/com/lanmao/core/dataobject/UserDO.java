@@ -1,6 +1,7 @@
 package com.lanmao.core.dataobject;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.lanmao.common.bean.BaseBean;
@@ -30,4 +31,12 @@ public class UserDO extends BaseBean {
     private String mobile;
 
     private String openId;
+
+    //=================非数据库字段==========
+
+    @TableField(exist = false)
+    private Integer offset;
+
+    @TableField(exist = false)
+    private Integer limit;
 }

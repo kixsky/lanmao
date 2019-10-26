@@ -41,10 +41,16 @@ public class UserRepository extends BaseRepository<UserDTO> {
 
     @Override
     public List<UserDTO> queryList(UserDTO query) {
-        query.setIsDeleted(YesOrNoEnum.NO.getCode());
-        Map<String, Object> objMap = CommonUtils.toQueryMap(query);
-        List<UserDO> list = userDAO.selectByMap(objMap);
+        UserDO record = new UserDO();
+        CommonUtils.copyProperties(query, record);
+        List<UserDO> list = userDAO.selectList(record);
         return CommonUtils.convertList(list, UserDTO.class);
+    }
+
+    public int countQueryList(UserDTO query) {
+        UserDO record = new UserDO();
+        CommonUtils.copyProperties(query, record);
+        return userDAO.countSelectList(record);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.lanmao.core.share.service;
 
 import com.lanmao.common.bean.BaseResult;
+import com.lanmao.common.bean.PageDTO;
 import com.lanmao.core.share.constants.Constants;
 import com.lanmao.core.share.dto.ChargePackageDTO;
 import com.lanmao.core.share.dto.LoginDTO;
@@ -107,4 +108,14 @@ public interface UserService {
      */
     @RequestMapping(value = "/bookCharge", method = RequestMethod.POST)
     BaseResult<UserChargeRecordDTO> bookCharge(@RequestBody UserChargeRecordDTO bookParams);
+
+
+    /**
+     *
+     * 分页查询
+     * @param pageDTO
+     * @return
+     */
+    @RequestMapping(value = "/queryPage", method = RequestMethod.POST)
+    BaseResult<PageDTO<UserDTO>> queryPage(@RequestBody PageDTO<UserDTO> pageDTO);
 }
