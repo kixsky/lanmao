@@ -2,6 +2,7 @@ package com.lanmao.user.auth;
 
 import com.alibaba.fastjson.JSON;
 import com.lanmao.common.annotation.IgnorePath;
+import com.lanmao.common.constants.CommonConstants;
 import com.lanmao.common.constants.ErrorCodeEnum;
 import com.lanmao.common.exception.BusinessException;
 import com.lanmao.core.share.dto.UserDTO;
@@ -53,7 +54,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         Cookie[] cookies = req.getCookies();
         if (cookies != null && cookies.length > 0) {
             for (Cookie cookie: cookies) {
-                if ("accessToken".equals(cookie.getName())) {
+                if (CommonConstants.ACCESS_TOKEN.equals(cookie.getName())) {
                     return cookie.getValue();
                 }
             }
