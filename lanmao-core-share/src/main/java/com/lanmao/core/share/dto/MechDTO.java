@@ -45,4 +45,6 @@ public class MechDTO extends BaseBean {
     private Integer offset;
 
     private Integer limit;
+
+    private String smsCode;
 }

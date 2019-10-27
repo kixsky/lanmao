@@ -1,14 +1,16 @@
 package com.lanmao.mech.auth;
 
+import com.lanmao.core.share.dto.MechDTO;
+
 public class LoginHolder {
 
-    private static ThreadLocal<LoginUser> threadLocal = new ThreadLocal<>();
+    private static ThreadLocal<MechDTO> threadLocal = new ThreadLocal<>();
 
-    public static LoginUser get() {
+    public static MechDTO get() {
         return threadLocal.get();
     }
 
-    public static void set(LoginUser user) {
+    public static void set(MechDTO user) {
         threadLocal.set(user);
     }
 }

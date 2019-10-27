@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lanmao.core.mapper.OrderMechDAO">
+    <sql id="Base_Select_Where">
+        is_deleted = 'N'
+        <if test="id != null">
+            AND id = #{id}
+        </if>
+        <if test="orderId != null">
+            AND order_id = #{orderId}
+        </if>
+        <if test="mechId != null">
+            AND mech_id = #{mechId}
+        </if>
+        <if test="status != null">
+            AND status = #{status}
+        </if>
+    </sql>
+    <select id="selectList" resultType="com.lanmao.core.dataobject.OrderMechDO">
+        SELECT *
+        FROM lanmao_order_mech
+        WHERE <include refid="Base_Select_Where"/>
+    </select>
+    <select id="countSelectList" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM lanmao_order_mech
+        WHERE <include refid="Base_Select_Where"/>
+    </select>
+</mapper>

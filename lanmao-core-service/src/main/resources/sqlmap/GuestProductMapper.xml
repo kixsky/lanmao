@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lanmao.core.mapper.GuestProductDAO">
+    <sql id="Base_Select_Where">
+        is_deleted = 'N'
+        <if test="id != null">
+            AND id = #{id}
+        </if>
+        <if test="guestId != null">
+            AND guest_id = #{guestId}
+        </if>
+        <if test="productId != null">
+            AND product_id = #{productId}
+        </if>
+        <if test="mechId != null">
+            AND mech_id = #{mechId}
+        </if>
+        <if test="payStatus != null">
+            AND pay_status = #{payStatus}
+        </if>
+        <if test="offset != null">
+            <if test="limit != null">
+                LIMIT #{offset},#{limit}
+            </if>
+        </if>
+    </sql>
+    <select id="selectList" resultType="com.lanmao.core.dataobject.GuestProductDO">
+        SELECT *
+        FROM lanmao_guest_product
+        WHERE <include refid="Base_Select_Where"/>
+    </select>
+    <select id="countSelectList" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM lanmao_guest_product
+        WHERE <include refid="Base_Select_Where"/>
+    </select>
+</mapper>

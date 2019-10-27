@@ -7,34 +7,18 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.lanmao.common.bean.BaseBean;
 import lombok.Data;
 
-import java.util.Date;
-
 @Data
-@TableName("lanmao_order")
-public class OrderDO extends BaseBean {
+@TableName("lanmao_order_mech")
+public class OrderMechDO extends BaseBean {
 
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    private Long userId;
+    private Long orderId;
 
-    private String orderNo;
-
-    private String address;
-
-    private String linkMobile;
-
-    private String linkName;
-
-    private Date bookTime;
+    private Long mechId;
 
     private String status;
-
-    private String remark;
-
-    private String userRemark;
-
-    private Date finishTime;
 
     @TableField(exist = false)
     private Integer offset;

@@ -45,4 +45,14 @@ public interface MechService {
      */
     @RequestMapping(value = "/queryProduct", method = RequestMethod.POST)
     BaseResult<List<ProductDTO>> queryProduct(@RequestParam("mechId") Long mechId);
+
+
+    /**
+     *
+     * 技师登陆
+     * @param loginDTO
+     * @return
+     */
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    BaseResult<MechDTO> login(@RequestBody MechDTO loginDTO);
 }

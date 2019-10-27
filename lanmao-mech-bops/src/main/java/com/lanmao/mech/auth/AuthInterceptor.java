@@ -5,15 +5,15 @@ import com.lanmao.common.annotation.IgnorePath;
 import com.lanmao.common.constants.CommonConstants;
 import com.lanmao.common.constants.ErrorCodeEnum;
 import com.lanmao.common.exception.BusinessException;
-import com.lanmao.core.share.dto.UserDTO;
+import com.lanmao.core.share.dto.MechDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -25,38 +25,40 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) {
-
         if (!(handler instanceof HandlerMethod)) {
             return true;
         }
-
         HandlerMethod method = (HandlerMethod) handler;
         if (method.getBeanType().getAnnotation(IgnorePath.class) != null ||
             method.getMethod().getAnnotation(IgnorePath.class) != null) {
             return true;
         }
-
-        String token = req.getHeader(CommonConstants.TOKEN);
-        log.info("token: {}", token);
-
+        String accessToken = getAccessToken(req);
+        log.info("accessToken: {}", accessToken);
         //未登录
-        if (StringUtils.isBlank(token)) {
+        if (StringUtils.isBlank(accessToken)) {
             throw new BusinessException(ErrorCodeEnum.CODE_302);
         }
-
-        String jsonData = redisTemplate.opsForValue().get(token);
+        String jsonData = redisTemplate.opsForValue().get(accessToken);
         log.info("jsonData: {}", jsonData);
         if (StringUtils.isBlank(jsonData)) {
             throw new BusinessException(ErrorCodeEnum.CODE_302);
         }
-
-        UserDTO userDto = JSON.parseObject(jsonData, UserDTO.class);
-        log.info("userDto : {}", JSON.toJSONString(userDto));
-
-        LoginUser user = new LoginUser();
-        BeanUtils.copyProperties(userDto, user);
-        LoginHolder.set(user);
+        MechDTO loginDTO = JSON.parseObject(jsonData, MechDTO.class);
+        log.info("loginDTO : {}", JSON.toJSONString(loginDTO));
+        LoginHolder.set(loginDTO);
         return true;
     }
 
+    private String getAccessToken(HttpServletRequest req) {
+        Cookie[] cookies = req.getCookies();
+        if (cookies != null && cookies.length > 0) {
+            for (Cookie cookie: cookies) {
+                if (CommonConstants.ACCESS_TOKEN.equals(cookie.getName())) {
+                    return cookie.getValue();
+                }
+            }
+        }
+        return null;
+    }
 }

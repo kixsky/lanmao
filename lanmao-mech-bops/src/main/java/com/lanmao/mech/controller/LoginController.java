@@ -1,12 +1,12 @@
-package com.lanmao.user.controller;
+package com.lanmao.mech.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.lanmao.common.annotation.IgnorePath;
 import com.lanmao.common.bean.BaseResult;
 import com.lanmao.common.constants.CommonConstants;
-import com.lanmao.core.share.dto.LoginDTO;
-import com.lanmao.core.share.dto.UserDTO;
-import com.lanmao.core.share.service.UserService;
+import com.lanmao.common.exception.BusinessException;
+import com.lanmao.core.share.dto.MechDTO;
+import com.lanmao.core.share.service.MechService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,36 +25,35 @@ import java.util.UUID;
 public class LoginController {
 
     @Resource
-    private UserService userService;
+    private MechService mechService;
 
     @Resource
     private RedisTemplate<String, String> redisTemplate;
 
     /**
      *
-     * 登录
+     * 登陆
      * @param loginDTO
      * @return
      */
     @IgnorePath
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public BaseResult<String> login(@RequestBody LoginDTO loginDTO, HttpServletResponse response) {
+    public BaseResult<String> login(@RequestBody MechDTO loginDTO, HttpServletResponse response) {
         BaseResult<String> baseResult = new BaseResult<>();
         baseResult.setCodeSuccess();
-        BaseResult<UserDTO> loginResult = userService.login(loginDTO);
+        BaseResult<MechDTO> loginResult = mechService.login(loginDTO);
         if (loginResult.failed()) {
-            baseResult.setCode(loginResult.getCode());
-            baseResult.setMessage(loginResult.getMessage());
-            return baseResult;
+            throw new BusinessException(loginResult.getCode(), loginResult.getMessage());
         }
-        UserDTO loginUserDTO = loginResult.getData();
+        MechDTO mechDTO = loginResult.getData();
         String accessToken = UUID.randomUUID().toString();
-        redisTemplate.opsForValue().set(accessToken, JSON.toJSONString(loginUserDTO));
+        redisTemplate.opsForValue().set(accessToken, JSON.toJSONString(mechDTO));
         Cookie cookie = new Cookie(CommonConstants.ACCESS_TOKEN, accessToken);
         cookie.setMaxAge(30 * 12 * 3600);
         cookie.setHttpOnly(true);
         cookie.setPath("/");
         response.addCookie(cookie);
+        baseResult.setData(accessToken);
         return baseResult;
     }
 }
