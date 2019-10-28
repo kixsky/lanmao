@@ -32,6 +32,11 @@ public class OrderGuestRepository extends BaseRepository<OrderGuestDTO> {
     }
 
     @Override
+    public int countQueryList(OrderGuestDTO query) {
+        return 0;
+    }
+
+    @Override
     public OrderGuestDTO queryOne(OrderGuestDTO query) {
         return null;
     }

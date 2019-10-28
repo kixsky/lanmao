@@ -32,6 +32,11 @@ public class OrderMechRepository extends BaseRepository<OrderMechDTO> {
     }
 
     @Override
+    public int countQueryList(OrderMechDTO query) {
+        return 0;
+    }
+
+    @Override
     public OrderMechDTO queryOne(OrderMechDTO query) {
         return null;
     }

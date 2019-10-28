@@ -35,9 +35,7 @@ public abstract class BaseRepository<T> {
      * @param query
      * @return
      */
-    public int countQueryList(T query) {
-        return 0;
-    }
+    public abstract int countQueryList(T query);
 
     /**
      *

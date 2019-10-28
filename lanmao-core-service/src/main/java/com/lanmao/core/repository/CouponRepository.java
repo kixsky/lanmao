@@ -49,6 +49,11 @@ public class CouponRepository extends BaseRepository<CouponDTO> {
     }
 
     @Override
+    public int countQueryList(CouponDTO query) {
+        return 0;
+    }
+
+    @Override
     public CouponDTO queryOne(@NotNull CouponDTO query) {
         List<CouponDTO> list = queryList(query);
         if (CollectionUtils.isNotEmpty(list)) {

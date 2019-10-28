@@ -41,6 +41,11 @@ public class UserChargeRecordRepository extends BaseRepository<UserChargeRecordD
     }
 
     @Override
+    public int countQueryList(UserChargeRecordDTO query) {
+        return 0;
+    }
+
+    @Override
     public UserChargeRecordDTO queryOne(UserChargeRecordDTO query) {
         return null;
     }

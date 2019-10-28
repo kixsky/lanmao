@@ -38,6 +38,11 @@ public class UserConsumeRepository extends BaseRepository<UserConsumeDTO> {
     }
 
     @Override
+    public int countQueryList(UserConsumeDTO query) {
+        return 0;
+    }
+
+    @Override
     public UserConsumeDTO queryOne(UserConsumeDTO query) {
         return null;
     }

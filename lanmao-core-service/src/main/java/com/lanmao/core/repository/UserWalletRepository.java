@@ -38,6 +38,11 @@ public class UserWalletRepository extends BaseRepository<UserWalletDTO> {
     }
 
     @Override
+    public int countQueryList(UserWalletDTO query) {
+        return 0;
+    }
+
+    @Override
     public UserWalletDTO queryOne(UserWalletDTO query) {
         return null;
     }

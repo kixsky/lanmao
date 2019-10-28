@@ -39,6 +39,11 @@ public class OrderRepository extends BaseRepository<OrderDTO> {
     }
 
     @Override
+    public int countQueryList(OrderDTO query) {
+        return 0;
+    }
+
+    @Override
     public OrderDTO queryOne(OrderDTO query) {
         return null;
     }

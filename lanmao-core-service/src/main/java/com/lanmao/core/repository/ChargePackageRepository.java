@@ -41,6 +41,11 @@ public class ChargePackageRepository extends BaseRepository<ChargePackageDTO> {
     }
 
     @Override
+    public int countQueryList(ChargePackageDTO query) {
+        return 0;
+    }
+
+    @Override
     public ChargePackageDTO queryOne(ChargePackageDTO query) {
         return null;
     }

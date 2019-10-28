@@ -38,6 +38,11 @@ public class UserCouponRepository extends BaseRepository<UserCouponDTO> {
     }
 
     @Override
+    public int countQueryList(UserCouponDTO query) {
+        return 0;
+    }
+
+    @Override
     public UserCouponDTO queryOne(UserCouponDTO query) {
         return null;
     }

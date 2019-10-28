@@ -33,6 +33,11 @@ public class GuestProductRepository extends BaseRepository<GuestProductDTO> {
     }
 
     @Override
+    public int countQueryList(GuestProductDTO query) {
+        return 0;
+    }
+
+    @Override
     public GuestProductDTO queryOne(GuestProductDTO query) {
         return null;
     }

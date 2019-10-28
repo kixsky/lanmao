@@ -35,6 +35,11 @@ public class MechProductRepository extends BaseRepository<MechProductDTO> {
     }
 
     @Override
+    public int countQueryList(MechProductDTO query) {
+        return 0;
+    }
+
+    @Override
     public MechProductDTO queryOne(MechProductDTO query) {
         return null;
     }

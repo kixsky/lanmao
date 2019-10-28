@@ -45,6 +45,11 @@ public class SmsRepository extends BaseRepository<SmsDTO> {
     }
 
     @Override
+    public int countQueryList(SmsDTO query) {
+        return 0;
+    }
+
+    @Override
     public SmsDTO queryOne(SmsDTO query) {
         List<SmsDTO> list = queryList(query);
         if (CollectionUtils.isNotEmpty(list)) {

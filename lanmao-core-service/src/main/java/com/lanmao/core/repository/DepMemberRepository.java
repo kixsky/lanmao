@@ -38,6 +38,11 @@ public class DepMemberRepository extends BaseRepository<DepMemberDTO> {
     }
 
     @Override
+    public int countQueryList(DepMemberDTO query) {
+        return 0;
+    }
+
+    @Override
     public DepMemberDTO queryOne(DepMemberDTO query) {
         List<DepMemberDTO> list = queryList(query);
         if (CollectionUtils.isNotEmpty(list)) {
