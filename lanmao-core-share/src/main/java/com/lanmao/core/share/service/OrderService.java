@@ -1,6 +1,7 @@
 package com.lanmao.core.share.service;
 
 import com.lanmao.common.bean.BaseResult;
+import com.lanmao.common.bean.PageDTO;
 import com.lanmao.core.share.constants.Constants;
 import com.lanmao.core.share.dto.OrderDTO;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -60,4 +61,13 @@ public interface OrderService {
      */
     @RequestMapping(value = "/deleteById", method = RequestMethod.POST)
     BaseResult<Integer> deleteById(@RequestBody OrderDTO deleteObj);
+
+
+    /**
+     * 分页查询
+     * @param pageDTO
+     * @return
+     */
+    @RequestMapping(value = "/queryPage", method = RequestMethod.POST)
+    BaseResult<PageDTO<OrderDTO>> queryPage(@RequestBody PageDTO<OrderDTO> pageDTO);
 }

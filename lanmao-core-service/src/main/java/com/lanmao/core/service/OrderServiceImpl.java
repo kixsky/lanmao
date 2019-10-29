@@ -1,7 +1,9 @@
 package com.lanmao.core.service;
 
+import com.alibaba.fastjson.JSON;
 import com.lanmao.common.base.BaseService;
 import com.lanmao.common.bean.BaseResult;
+import com.lanmao.common.bean.PageDTO;
 import com.lanmao.common.constants.ErrorCodeEnum;
 import com.lanmao.core.repository.OrderRepository;
 import com.lanmao.core.share.dto.OrderDTO;
@@ -51,5 +53,27 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public BaseResult<Integer> deleteById(@RequestBody OrderDTO deleteObj) {
         return null;
+    }
+
+    @Override
+    public BaseResult<PageDTO<OrderDTO>> queryPage(@RequestBody PageDTO<OrderDTO> pageDTO) {
+        log.info("pageDTO: {}", JSON.toJSONString(pageDTO));
+        BaseResult<PageDTO<OrderDTO>> baseResult = new BaseResult<>();
+        baseResult.setCodeSuccess();
+        OrderDTO params = pageDTO.getParams();
+        if (params == null) {
+            params = new OrderDTO();
+            pageDTO.setParams(params);
+        }
+        pageDTO.setDefaultValue();
+        final Integer page = pageDTO.getPage();
+        final Integer pageSize = pageDTO.getPageSize();
+        final Integer offset = (page - 1) * pageSize;
+        List<OrderDTO> list = orderRepository.queryList(params);
+        final int totalCount = orderRepository.countQueryList(params);
+        pageDTO.setTotalCount(totalCount);
+        pageDTO.setList(list);
+        baseResult.setData(pageDTO);
+        return baseResult;
     }
 }

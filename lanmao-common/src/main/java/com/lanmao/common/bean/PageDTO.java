@@ -4,6 +4,8 @@ import java.util.List;
 
 public class PageDTO<T> {
 
+    public static final int DEFAULT_PAGE_SIZE = 10;
+
     private Integer page;
 
     private Integer pageSize;
@@ -13,6 +15,15 @@ public class PageDTO<T> {
     private List<T> list;
 
     private Integer totalCount;
+
+    public void setDefaultValue() {
+        if (this.page == null) {
+            this.page = 1;
+        }
+        if (this.pageSize == null) {
+            this.pageSize = DEFAULT_PAGE_SIZE;
+        }
+    }
 
     public Integer getPage() {
         return page;
