@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lanmao.core.mapper.OrderDAO">
-
-
+    <sql id="Base_List_Where">
+        is_deleted = 'N'
+        <if test="id != null">
+            AND id = #{id}
+        </if>
+        <if test="orderNo != null">
+            AND order_no = #{orderNo}
+        </if>
+        <if test="userId != null">
+            AND user_id = #{userId}
+        </if>
+        <if test="address != null">
+            AND address = #{address}
+        </if>
+    </sql>
+    <select id="selectList" resultType="com.lanmao.core.dataobject.OrderDO">
+        SELECT *
+        FROM lanmao_order
+        WHERE
+        <include refid="Base_List_Where"/>
+    </select>
+    <select id="countSelectList" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM lanmao_order
+        WHERE
+        <include refid="Base_List_Where"/>
+    </select>
 </mapper>

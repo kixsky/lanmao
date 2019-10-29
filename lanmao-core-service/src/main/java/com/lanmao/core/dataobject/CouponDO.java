@@ -26,5 +26,7 @@ public class CouponDO extends BaseBean {
 
     private String ruleCode; //规则code
 
+    private String ruleName; //规则名称
+
     private Integer type; //类型
 }

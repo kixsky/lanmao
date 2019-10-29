@@ -146,12 +146,7 @@ public class UserServiceImpl implements UserService {
             params = new UserDTO();
             pageDTO.setParams(params);
         }
-        if (pageDTO.getPage() == null) {
-            pageDTO.setPage(1);
-        }
-        if (pageDTO.getPageSize() == null){
-            pageDTO.setPageSize(10);
-        }
+        pageDTO.setDefaultValue();
         final Integer page = pageDTO.getPage();
         final Integer pageSize = pageDTO.getPageSize();
         final Integer offset = (page - 1) * pageSize;

@@ -1,7 +1,9 @@
 package com.lanmao.common.bean;
 
 import com.lanmao.common.constants.ErrorCodeEnum;
+import lombok.Data;
 
+@Data
 public class BaseResult<T> {
 
     private Integer code;
@@ -31,29 +33,5 @@ public class BaseResult<T> {
 
     public boolean failed() {
         return !ErrorCodeEnum.CODE_SUCCESS.getCode().equals(this.code);
-    }
-
-    public Integer getCode() {
-        return code;
-    }
-
-    public void setCode(Integer code) {
-        this.code = code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
     }
 }
