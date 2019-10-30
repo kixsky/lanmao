@@ -5,14 +5,26 @@ import com.lanmao.common.base.BaseService;
 import com.lanmao.common.bean.BaseResult;
 import com.lanmao.common.bean.PageDTO;
 import com.lanmao.common.constants.ErrorCodeEnum;
+import com.lanmao.common.utils.CommonUtils;
+import com.lanmao.core.repository.GuestProductRepository;
+import com.lanmao.core.repository.OrderGuestRepository;
+import com.lanmao.core.repository.OrderMechRepository;
 import com.lanmao.core.repository.OrderRepository;
+import com.lanmao.core.share.dto.GuestProductDTO;
 import com.lanmao.core.share.dto.OrderDTO;
+import com.lanmao.core.share.dto.OrderGuestDTO;
+import com.lanmao.core.share.dto.OrderMechDTO;
 import com.lanmao.core.share.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.core.annotation.OrderUtils;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -21,6 +33,15 @@ public class OrderServiceImpl implements OrderService {
 
     @Resource
     private OrderRepository orderRepository;
+
+    @Resource
+    private OrderGuestRepository orderGuestRepository;
+
+    @Resource
+    private GuestProductRepository guestProductRepository;
+
+    @Resource
+    private OrderMechRepository orderMechRepository;
 
     @Override
     public BaseResult<Long> save(@RequestBody OrderDTO orderDTO) {
@@ -74,6 +95,61 @@ public class OrderServiceImpl implements OrderService {
         pageDTO.setTotalCount(totalCount);
         pageDTO.setList(list);
         baseResult.setData(pageDTO);
+        return baseResult;
+    }
+
+    @Override
+    @Transactional
+    public BaseResult<String> bookOrder(@RequestBody OrderDTO bookDTO) {
+        log.info("bookOrder: {}", JSON.toJSONString(bookDTO));
+        BaseResult<String> baseResult = new BaseResult<>();
+        baseResult.setCodeSuccess();
+        //校验
+        CommonUtils.checkParams(bookDTO.getUserId() == null, "userId不能为空");
+        CommonUtils.checkParams(bookDTO.getAddressId() == null, "addressId不能为空");
+        CommonUtils.checkParams(StringUtils.isEmpty(bookDTO.getLinkMobile()), "linkMobile不能为空");
+        CommonUtils.checkParams(StringUtils.isEmpty(bookDTO.getLinkName()), "linkName不能为空");
+        CommonUtils.checkParams(bookDTO.getBookTime() == null, "bookTime不能为空");
+        CommonUtils.checkParams(CollectionUtils.isEmpty(bookDTO.getGuestList()), "guestList不能为空");
+        for (OrderGuestDTO guest: bookDTO.getGuestList()) {
+            CommonUtils.checkParams(StringUtils.isEmpty(guest.getGuestName()), "guestName不能为空");
+            CommonUtils.checkParams(StringUtils.isEmpty(guest.getGuestGender()), "guestGender不能为空");
+            List<GuestProductDTO> productList = guest.getProductList();
+            CommonUtils.checkParams(CollectionUtils.isEmpty(productList), "productList不能为空");
+            for (GuestProductDTO productDTO: productList) {
+                CommonUtils.checkParams(productDTO.getProductId() == null, "productId不能为空");
+            }
+        }
+        //入库
+        String modifier = bookDTO.getModifier();
+        bookDTO.setOrderNo(CommonUtils.genOrderNo());
+        Long newOrderId = orderRepository.save(bookDTO);
+        List<Long> orderMechIds = new ArrayList<>();
+        for (OrderGuestDTO guest: bookDTO.getGuestList()) {
+            guest.setOrderId(newOrderId);
+            guest.setCreator(modifier);
+            guest.setModifier(modifier);
+            Long newGuestId = orderGuestRepository.save(guest);
+            for (GuestProductDTO productDTO: guest.getProductList()) {
+                productDTO.setGuestId(newGuestId);
+                productDTO.setCreator(modifier);
+                productDTO.setModifier(modifier);
+                guestProductRepository.save(productDTO);
+            }
+            if (guest.getMechId() != null) {
+                orderMechIds.add(guest.getMechId());
+            }
+        }
+        if (CollectionUtils.isNotEmpty(orderMechIds)) {
+            for (Long mechId: orderMechIds) {
+                OrderMechDTO saveMechDTO = new OrderMechDTO();
+                saveMechDTO.setCreator(modifier);
+                saveMechDTO.setModifier(modifier);
+                saveMechDTO.setOrderId(newOrderId);
+                saveMechDTO.setMechId(mechId);
+                orderMechRepository.save(saveMechDTO);
+            }
+        }
         return baseResult;
     }
 }

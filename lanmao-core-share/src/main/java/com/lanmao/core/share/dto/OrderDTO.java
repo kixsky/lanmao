@@ -4,6 +4,7 @@ import com.lanmao.common.bean.BaseBean;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class OrderDTO extends BaseBean {
@@ -30,5 +31,7 @@ public class OrderDTO extends BaseBean {
 
     private Date finishTime;
 
+    private List<OrderGuestDTO> guestList; //客次
 
+    private Long addressId; //地址
 }

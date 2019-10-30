@@ -5,6 +5,7 @@ import com.lanmao.common.constants.YesOrNoEnum;
 import com.lanmao.common.utils.CommonUtils;
 import com.lanmao.core.dataobject.UserDO;
 import com.lanmao.core.mapper.UserDAO;
+import com.lanmao.core.repository.cache.UserCache;
 import com.lanmao.core.share.dto.UserDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -21,6 +22,9 @@ public class UserRepository extends BaseRepository<UserDTO> {
     @Resource
     private UserDAO userDAO;
 
+    @Resource
+    private UserCache userCache;
+
     @Override
     public Long save(UserDTO saveObject) {
         UserDO record = new UserDO();
@@ -33,9 +37,17 @@ public class UserRepository extends BaseRepository<UserDTO> {
 
     @Override
     public UserDTO queryById(Long id) {
+        UserDTO user = userCache.getUser(id);
+        if (user != null) {
+            return user;
+        }
         UserDO record = userDAO.selectById(id);
+        if (record == null) {
+            return null;
+        }
         UserDTO resultDTO = new UserDTO();
         CommonUtils.copyProperties(record, resultDTO);
+        userCache.putUser(id, resultDTO);
         return resultDTO;
     }
 

@@ -70,4 +70,14 @@ public interface OrderService {
      */
     @RequestMapping(value = "/queryPage", method = RequestMethod.POST)
     BaseResult<PageDTO<OrderDTO>> queryPage(@RequestBody PageDTO<OrderDTO> pageDTO);
+
+
+    /**
+     *
+     * 下订单
+     * @param bookDTO
+     * @return
+     */
+    @RequestMapping(value = "/bookOrder", method = RequestMethod.POST)
+    BaseResult<String> bookOrder(@RequestBody OrderDTO bookDTO);
 }
