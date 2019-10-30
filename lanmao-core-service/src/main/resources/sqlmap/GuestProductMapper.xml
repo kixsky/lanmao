@@ -27,11 +27,13 @@
     <select id="selectList" resultType="com.lanmao.core.dataobject.GuestProductDO">
         SELECT *
         FROM lanmao_guest_product
-        WHERE <include refid="Base_Select_Where"/>
+        WHERE
+        <include refid="Base_Select_Where"/>
     </select>
     <select id="countSelectList" resultType="java.lang.Integer">
         SELECT count(*)
         FROM lanmao_guest_product
-        WHERE <include refid="Base_Select_Where"/>
+        WHERE
+        <include refid="Base_Select_Where"/>
     </select>
 </mapper>

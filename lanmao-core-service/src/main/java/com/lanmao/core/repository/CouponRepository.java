@@ -1,6 +1,7 @@
 package com.lanmao.core.repository;
 
 import com.lanmao.common.base.BaseRepository;
+import com.lanmao.common.bean.PageDTO;
 import com.lanmao.common.utils.CommonUtils;
 import com.lanmao.core.dataobject.CouponDO;
 import com.lanmao.core.mapper.CouponDAO;
@@ -10,9 +11,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
-import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 @Slf4j
@@ -22,7 +21,7 @@ public class CouponRepository extends BaseRepository<CouponDTO> {
     private CouponDAO couponDAO;
 
     @Override
-    public Long save(@NotNull CouponDTO saveObject) {
+    public Long save(CouponDTO saveObject) {
         CouponDO record = new CouponDO();
         CommonUtils.copyProperties(saveObject, record);
         CommonUtils.setInsertDefaultValue(record);
@@ -42,19 +41,22 @@ public class CouponRepository extends BaseRepository<CouponDTO> {
     }
 
     @Override
-    public List<CouponDTO> queryList(@NotNull CouponDTO query) {
-        Map<String, Object> objMap = CommonUtils.toQueryMap(query);
-        List<CouponDO> list = couponDAO.selectByMap(objMap);
+    public List<CouponDTO> queryList(CouponDTO query) {
+        CouponDO record = new CouponDO();
+        CommonUtils.copyProperties(query, record);
+        List<CouponDO> list = couponDAO.selectList(record);
         return CommonUtils.convertList(list, CouponDTO.class);
     }
 
     @Override
     public int countQueryList(CouponDTO query) {
-        return 0;
+        CouponDO record = new CouponDO();
+        CommonUtils.copyProperties(query, record);
+        return couponDAO.countSelectList(record);
     }
 
     @Override
-    public CouponDTO queryOne(@NotNull CouponDTO query) {
+    public CouponDTO queryOne(CouponDTO query) {
         List<CouponDTO> list = queryList(query);
         if (CollectionUtils.isNotEmpty(list)) {
             return list.get(0);
@@ -63,7 +65,7 @@ public class CouponRepository extends BaseRepository<CouponDTO> {
     }
 
     @Override
-    public int updateById(@NotNull CouponDTO updateObject) {
+    public int updateById(CouponDTO updateObject) {
         CommonUtils.setUpdateDefaultValue(updateObject);
         CouponDO record = new CouponDO();
         CommonUtils.copyProperties(updateObject, record);
@@ -71,10 +73,29 @@ public class CouponRepository extends BaseRepository<CouponDTO> {
     }
 
     @Override
-    public int deleteById(@NotNull CouponDTO deleteObject) {
+    public int deleteById(CouponDTO deleteObject) {
         CommonUtils.setUpdateDefaultValue(deleteObject);
         CouponDO record = new CouponDO();
         CommonUtils.copyProperties(deleteObject, record);
         return couponDAO.updateById(record);
+    }
+
+    public PageDTO<CouponDTO> queryPage(PageDTO<CouponDTO> pageDTO) {
+        pageDTO.setDefaultValue();
+        final Integer page = pageDTO.getPage();
+        final Integer pageSize = pageDTO.getPageSize();
+        final Integer offset = (page - 1) * pageSize;
+        CouponDTO params = pageDTO.getParams();
+        if (params == null) {
+            params = new CouponDTO();
+            pageDTO.setParams(params);
+        }
+        params.setOffset(offset);
+        params.setLimit(pageSize);
+        List<CouponDTO> list = queryList(params);
+        int totalCount = countQueryList(params);
+        pageDTO.setTotalCount(totalCount);
+        pageDTO.setList(list);
+        return pageDTO;
     }
 }

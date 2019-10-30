@@ -33,11 +33,13 @@
     <select id="selectList" resultType="com.lanmao.core.dataobject.CouponDO">
         SELECT *
         FROM lanmao_coupon
+        WHERE
         <include refid="Base_List_Where"/>
     </select>
     <select id="countSelectList" resultType="java.lang.Integer">
         SELECT count(*)
         FROM lanmao_coupon
+        WHERE
         <include refid="Base_List_Where"/>
     </select>
 </mapper>
