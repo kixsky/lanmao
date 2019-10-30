@@ -1,7 +1,11 @@
 package com.lanmao.web.controller;
 
+import com.lanmao.common.bean.BaseResult;
+import com.lanmao.core.share.dto.CouponDTO;
 import com.lanmao.core.share.service.CouponService;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -13,5 +17,13 @@ public class CouponController {
     @Resource
     private CouponService couponService;
 
-
+    /**
+     * 新增
+     * @param couponDTO
+     * @return
+     */
+    @RequestMapping(value = "/addCoupon", method = RequestMethod.POST)
+    public BaseResult<?> addCoupon(@RequestBody CouponDTO couponDTO) {
+        return couponService.save(couponDTO);
+    }
 }

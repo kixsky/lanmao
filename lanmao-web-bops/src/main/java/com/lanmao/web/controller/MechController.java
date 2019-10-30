@@ -43,4 +43,14 @@ public class MechController {
     public BaseResult<List<ProductDTO>> selectProduct(@RequestBody MechDTO mechDTO) {
         return mechService.queryProduct(mechDTO.getId());
     }
+
+    /**
+     * 新增技师
+     * @param mechDTO
+     * @return
+     */
+    @RequestMapping(value = "/addMech", method = RequestMethod.POST)
+    public BaseResult<?> addMech(@RequestBody MechDTO mechDTO) {
+        return mechService.save(mechDTO);
+    }
 }
