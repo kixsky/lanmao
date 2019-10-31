@@ -144,7 +144,7 @@ public class WechatUtils {
                     && "SUCCESS".equalsIgnoreCase(return_code)) {
 
                 Map<String, String> result = new HashMap<>();
-                result.put("appid", mpAppId);
+                result.put("appId", mpAppId);
                 result.put("package", "prepay_id=" + params.get("prepay_id"));
                 result.put("nonceStr", createNoncestr(32));
                 result.put("timeStamp", String.valueOf(System.currentTimeMillis()).substring(0, 10));
