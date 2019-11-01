@@ -118,4 +118,14 @@ public interface UserService {
      */
     @RequestMapping(value = "/queryPage", method = RequestMethod.POST)
     BaseResult<PageDTO<UserDTO>> queryPage(@RequestBody PageDTO<UserDTO> pageDTO);
+
+
+    /**
+     *
+     * 充值通知
+     * @param chargeResultDTO
+     * @return
+     */
+    @RequestMapping(value = "/chargeResult", method = RequestMethod.POST)
+    BaseResult<String> chargeResult(@RequestBody UserChargeRecordDTO chargeResultDTO);
 }

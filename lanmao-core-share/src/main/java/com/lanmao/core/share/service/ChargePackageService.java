@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.List;
 
 @FeignClient(value = Constants.SERVICE_NAME)
-@RequestMapping(value = "/api/userChargeRecord")
+@RequestMapping(value = "/api/chargePackage")
 public interface ChargePackageService {
 
 

@@ -10,7 +10,9 @@ import com.lanmao.core.repository.*;
 import com.lanmao.core.share.dto.*;
 import com.lanmao.core.share.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -158,6 +160,44 @@ public class UserServiceImpl implements UserService {
         pageDTO.setList(list);
         baseResult.setData(pageDTO);
         return baseResult;
+    }
+
+    @Override
+    @Transactional
+    public BaseResult<String> chargeResult(@RequestBody UserChargeRecordDTO chargeResultDTO) {
+        BaseResult<String> baseResult = new BaseResult<>();
+        baseResult.setCodeSuccess();
+        log.info("chargeResultDTO: {}", JSON.toJSONString(chargeResultDTO));
+        final String tradeNo = chargeResultDTO.getTradeNo();
+        final BigDecimal payAmount = chargeResultDTO.getPayAmount();
+        final String outTradeNo = chargeResultDTO.getOutTradeNo();
+        final String payBackJson = chargeResultDTO.getPayBackJson();
+
+        UserChargeRecordDTO query = new UserChargeRecordDTO();
+        query.setTradeNo(tradeNo);
+        List<UserChargeRecordDTO> list = userChargeRecordRepository.queryList(query);
+        if (CollectionUtils.isEmpty(list)) {
+            throw new BusinessException("没有查到充值记录");
+        }
+        UserChargeRecordDTO userChargeRecordDTO = list.get(0);
+        UserDTO user = userRepository.queryById(userChargeRecordDTO.getUserId());
+        UserChargeRecordDTO updateDTO = new UserChargeRecordDTO();
+        updateDTO.setId(userChargeRecordDTO.getId());
+        updateDTO.setOutTradeNo(outTradeNo);
+        updateDTO.setPayBackJson(payBackJson);
+        updateDTO.setStatus(2);
+        userChargeRecordRepository.updateById(updateDTO);
+        ChargePackageDTO chargePackageDTO = chargePackageRepository.queryById(userChargeRecordDTO.getPackageId());
+        if (chargePackageDTO == null) {
+            throw new BusinessException("套餐不存在");
+        }
+        UserWalletDTO queryUserWalletDTO = new UserWalletDTO();
+        queryUserWalletDTO.setUserId(user.getId());
+        UserWalletDTO userWalletDTO = userWalletRepository.queryOne(queryUserWalletDTO);
+        if (userWalletDTO == null) {
+
+        }
+        return null;
     }
 
     @Override
