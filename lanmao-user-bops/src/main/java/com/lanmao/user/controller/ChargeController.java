@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.lanmao.common.bean.BaseResult;
 import com.lanmao.common.constants.PayStatusEnum;
 import com.lanmao.common.exception.BusinessException;
+import com.lanmao.common.lock.RedissonLockUtil;
 import com.lanmao.common.utils.CommonUtils;
 import com.lanmao.common.utils.RequestUtil;
 import com.lanmao.core.share.dto.ChargePackageDTO;
@@ -11,6 +12,7 @@ import com.lanmao.core.share.dto.UserChargeRecordDTO;
 import com.lanmao.core.share.dto.UserDTO;
 import com.lanmao.core.share.service.ChargePackageService;
 import com.lanmao.core.share.service.UserService;
+import com.lanmao.user.aop.NotRepeatAction;
 import com.lanmao.user.auth.LoginHolder;
 import com.lanmao.user.utils.WechatPayParams;
 import com.lanmao.user.utils.WechatUtils;
@@ -42,15 +44,20 @@ public class ChargeController {
     @Resource
     private WechatUtils wechatUtils;
 
+    @Resource
+    private RedissonLockUtil redissonLock;
+
     /**
      *
      * 充值下单
      * @param bookParams
      * @return
      */
+    @NotRepeatAction
     @RequestMapping(value = "/bookCharge", method = RequestMethod.POST)
     public BaseResult<UserChargeRecordDTO> bookCharge(@RequestBody UserChargeRecordDTO bookParams, HttpServletRequest request) {
         log.info("bookParams: {}", JSON.toJSONString(bookParams));
+        UserDTO loginUser = LoginHolder.get();
         BaseResult<UserChargeRecordDTO> baseResult = new BaseResult<>();
         baseResult.setCodeSuccess();
         UserDTO userDTO = LoginHolder.get();
