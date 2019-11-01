@@ -98,7 +98,7 @@ public class ChargeController {
         wechatPayParams.setOpenId(openId);
         wechatPayParams.setSpbillCreateIp(RequestUtil.getRemoteIp(request));
         wechatPayParams.setTotalFee(chargePackageDTO.getChargeAmount().multiply(BigDecimal.valueOf(100)).intValue());
-        wechatPayParams.setNotifyUrl("http://smapi.yinhuspa.com/charge/notify");
+        wechatPayParams.setNotifyUrl("http://smapi.yinhuspa.com/v1/charge/notify");
         Map<String, String>  payParams = wechatUtils.preOrder(wechatPayParams);
         userChargeRecordDTO.setPayParams(payParams);
         baseResult.setData(userChargeRecordDTO);

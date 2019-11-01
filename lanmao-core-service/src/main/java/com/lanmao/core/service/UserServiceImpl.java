@@ -164,7 +164,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public BaseResult<String> chargeResult(@RequestBody UserChargeRecordDTO chargeResultDTO) {
+    public BaseResult<String> chargeNotify(@RequestBody UserChargeRecordDTO chargeResultDTO) {
         BaseResult<String> baseResult = new BaseResult<>();
         baseResult.setCodeSuccess();
         log.info("chargeResultDTO: {}", JSON.toJSONString(chargeResultDTO));

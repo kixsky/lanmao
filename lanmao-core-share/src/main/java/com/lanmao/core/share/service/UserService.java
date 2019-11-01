@@ -127,5 +127,5 @@ public interface UserService {
      * @return
      */
     @RequestMapping(value = "/chargeResult", method = RequestMethod.POST)
-    BaseResult<String> chargeResult(@RequestBody UserChargeRecordDTO chargeResultDTO);
+    BaseResult<String> chargeNotify(@RequestBody UserChargeRecordDTO chargeResultDTO);
 }

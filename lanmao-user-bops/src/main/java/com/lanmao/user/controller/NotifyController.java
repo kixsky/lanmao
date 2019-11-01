@@ -24,7 +24,6 @@ import java.util.Map;
 
 @RestController
 @Slf4j
-@RequestMapping(value = "/v1/notify")
 public class NotifyController {
 
     @Resource
@@ -37,8 +36,8 @@ public class NotifyController {
     private UserService userService;
 
     @IgnorePath
-    @RequestMapping(value = "/chargeResult", method = RequestMethod.POST)
-    public void chargeResult(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    @RequestMapping(value = "/v1/charge/notify", method = RequestMethod.POST)
+    public void chargeNotify(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String xml = IOUtils.toString(request.getReader());
         log.info("微信参数: {}", xml);
         Map<String, String> map = XmlUtils.xmlToMap(xml);
@@ -53,7 +52,8 @@ public class NotifyController {
         userChargeRecordDTO.setTradeNo(outTradeNo);
         userChargeRecordDTO.setPayBackJson(JSON.toJSONString(map));
         userChargeRecordDTO.setPayAmount(new BigDecimal(totalFee).divide(BigDecimal.valueOf(100)));
-        BaseResult<String> chargeResult = userService.chargeResult(userChargeRecordDTO);
+        BaseResult<String> chargeResult = userService.chargeNotify(userChargeRecordDTO);
+        log.info("chargeResult: {}", JSON.toJSONString(chargeResult));
         if (chargeResult.failed()) {
             //保存下错误等待人工处理
 
