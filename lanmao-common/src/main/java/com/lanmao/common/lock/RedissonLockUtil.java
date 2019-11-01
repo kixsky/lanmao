@@ -12,14 +12,17 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class RedissonLockUtil {
 
+    private final static int DEFAULT_LEASE_TIME = 15; //默认过期时间
+
     @Resource
     private RedissonClient redissonClient;
 
     public boolean lock(String lockKey, int timeout) {
+        log.info("lockKey: {}, timeout: {}", lockKey, timeout);
         RLock lock = redissonClient.getLock(lockKey);
         boolean lockResult = false;
         try {
-            lockResult = lock.tryLock(timeout, 10, TimeUnit.SECONDS);
+            lockResult = lock.tryLock(timeout, DEFAULT_LEASE_TIME, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             log.info(e.getMessage(), e);
         }

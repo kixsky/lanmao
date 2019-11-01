@@ -1,9 +1,10 @@
-package com.lanmao.user.aop;
+package com.lanmao.mech.aop;
 
 import com.lanmao.common.exception.BusinessException;
 import com.lanmao.common.lock.RedissonLockUtil;
+import com.lanmao.core.share.dto.MechDTO;
 import com.lanmao.core.share.dto.UserDTO;
-import com.lanmao.user.auth.LoginHolder;
+import com.lanmao.mech.auth.LoginHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -34,7 +35,7 @@ public class NotRepeatActionAspect {
      */
     @Around("@annotation(notRepeatAction)")
     public Object doAround(ProceedingJoinPoint joinPoint, NotRepeatAction notRepeatAction) throws Throwable {
-        UserDTO loginUser = LoginHolder.get();
+        MechDTO loginUser = LoginHolder.get();
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
         String methodName = method.getName();
