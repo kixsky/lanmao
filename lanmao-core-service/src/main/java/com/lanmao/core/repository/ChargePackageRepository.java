@@ -29,7 +29,13 @@ public class ChargePackageRepository extends BaseRepository<ChargePackageDTO> {
 
     @Override
     public ChargePackageDTO queryById(Long id) {
-        return null;
+        ChargePackageDO record = chargePackageDAO.selectById(id);
+        if (record == null) {
+            return null;
+        }
+        ChargePackageDTO resultDTO = new ChargePackageDTO();
+        CommonUtils.copyProperties(record, resultDTO);
+        return resultDTO;
     }
 
     @Override

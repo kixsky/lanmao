@@ -6,6 +6,7 @@ import com.lanmao.core.dataobject.UserWalletDO;
 import com.lanmao.core.mapper.UserWalletDAO;
 import com.lanmao.core.share.dto.UserWalletDTO;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
@@ -34,7 +35,10 @@ public class UserWalletRepository extends BaseRepository<UserWalletDTO> {
 
     @Override
     public List<UserWalletDTO> queryList(UserWalletDTO query) {
-        return null;
+        UserWalletDO record = new UserWalletDO();
+        CommonUtils.copyProperties(query, record);
+        List<UserWalletDO> list = userWalletDAO.selectList(record);
+        return CommonUtils.convertList(list, UserWalletDTO.class);
     }
 
     @Override
@@ -44,12 +48,18 @@ public class UserWalletRepository extends BaseRepository<UserWalletDTO> {
 
     @Override
     public UserWalletDTO queryOne(UserWalletDTO query) {
+        List<UserWalletDTO> list = queryList(query);
+        if (CollectionUtils.isNotEmpty(list)) {
+            return list.get(0);
+        }
         return null;
     }
 
     @Override
     public int updateById(UserWalletDTO updateObject) {
-        return 0;
+        UserWalletDO record = new UserWalletDO();
+        CommonUtils.copyProperties(updateObject, record);
+        return userWalletDAO.updateById(record);
     }
 
     @Override

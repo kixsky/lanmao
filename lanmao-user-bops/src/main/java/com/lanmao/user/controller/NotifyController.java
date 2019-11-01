@@ -2,6 +2,8 @@ package com.lanmao.user.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.lanmao.common.annotation.IgnorePath;
+import com.lanmao.common.bean.BaseResult;
+import com.lanmao.core.share.dto.UserChargeRecordDTO;
 import com.lanmao.core.share.service.ChargePackageService;
 import com.lanmao.core.share.service.UserService;
 import com.lanmao.user.utils.WechatUtils;
@@ -16,6 +18,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,7 +49,16 @@ public class NotifyController {
         String outTradeNo = map.get("out_trade_no");
         String totalFee = map.get("total_fee");
 
-        Map<String, String> resultMap = new HashMap<String, String>();
+        UserChargeRecordDTO userChargeRecordDTO = new UserChargeRecordDTO();
+        userChargeRecordDTO.setTradeNo(outTradeNo);
+        userChargeRecordDTO.setPayBackJson(JSON.toJSONString(map));
+        userChargeRecordDTO.setPayAmount(new BigDecimal(totalFee).divide(BigDecimal.valueOf(100)));
+        BaseResult<String> chargeResult = userService.chargeResult(userChargeRecordDTO);
+        if (chargeResult.failed()) {
+            //保存下错误等待人工处理
+
+        }
+        Map<String, String> resultMap = new HashMap<>();
         resultMap.put("return_code", "SUCCESS");
         resultMap.put("return_msg", "OK");
 

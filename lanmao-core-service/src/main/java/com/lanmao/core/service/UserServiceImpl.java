@@ -191,13 +191,23 @@ public class UserServiceImpl implements UserService {
         if (chargePackageDTO == null) {
             throw new BusinessException("套餐不存在");
         }
+        BigDecimal totalAddAmount = chargePackageDTO.getChargeAmount().add(chargePackageDTO.getDonationAmount());
         UserWalletDTO queryUserWalletDTO = new UserWalletDTO();
         queryUserWalletDTO.setUserId(user.getId());
         UserWalletDTO userWalletDTO = userWalletRepository.queryOne(queryUserWalletDTO);
         if (userWalletDTO == null) {
-
+            userWalletDTO = new UserWalletDTO();
+            userWalletDTO.setUserId(user.getId());
+            userWalletDTO.setMobile(user.getMobile());
+            userWalletDTO.setBalance(totalAddAmount);
+            userWalletRepository.save(userWalletDTO);
+        } else {
+            final BigDecimal balance = userWalletDTO.getBalance();
+            BigDecimal sumBalance = balance.add(totalAddAmount);
+            userWalletDTO.setBalance(sumBalance);
+            userWalletRepository.updateById(userWalletDTO);
         }
-        return null;
+        return baseResult;
     }
 
     @Override

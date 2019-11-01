@@ -37,7 +37,10 @@ public class UserChargeRecordRepository extends BaseRepository<UserChargeRecordD
 
     @Override
     public List<UserChargeRecordDTO> queryList(UserChargeRecordDTO query) {
-        return null;
+        UserChargeRecordDO record = new UserChargeRecordDO();
+        CommonUtils.copyProperties(query, record);
+        List<UserChargeRecordDO> list = userChargeRecordDAO.selectList(record);
+        return CommonUtils.convertList(list, UserChargeRecordDTO.class);
     }
 
     @Override
@@ -52,7 +55,9 @@ public class UserChargeRecordRepository extends BaseRepository<UserChargeRecordD
 
     @Override
     public int updateById(UserChargeRecordDTO updateObject) {
-        return 0;
+        UserChargeRecordDO record = new UserChargeRecordDO();
+        CommonUtils.copyProperties(updateObject, record);
+        return userChargeRecordDAO.updateById(record);
     }
 
     @Override

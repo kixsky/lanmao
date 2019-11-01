@@ -14,4 +14,16 @@
         ORDER BY gmt_created DESC
         LIMIT 1
     </select>
+    <select id="selectList" resultType="com.lanmao.core.dataobject.UserWalletDO">
+        SELECT *
+        FROM lanmao_user_wallet
+        WHERE is_deleted = 'N'
+        <if test="userId != null">
+            AND user_id = #{userId}
+        </if>
+        <if test="mobile != null">
+            AND mobile = #{mobile}
+        </if>
+        ORDER BY gmt_created DESC
+    </select>
 </mapper>
