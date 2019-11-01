@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.lanmao.common.bean.BaseResult;
 import com.lanmao.common.bean.PageDTO;
 import com.lanmao.common.constants.ErrorCodeEnum;
+import com.lanmao.common.constants.PayStatusEnum;
 import com.lanmao.common.exception.BusinessException;
 import com.lanmao.common.utils.CommonUtils;
 import com.lanmao.core.repository.*;
@@ -169,7 +170,7 @@ public class UserServiceImpl implements UserService {
         baseResult.setCodeSuccess();
         log.info("chargeResultDTO: {}", JSON.toJSONString(chargeResultDTO));
         final String tradeNo = chargeResultDTO.getTradeNo();
-        final BigDecimal payAmount = chargeResultDTO.getPayAmount();
+        final BigDecimal payAmount = chargeResultDTO.getChargeAmount();
         final String outTradeNo = chargeResultDTO.getOutTradeNo();
         final String payBackJson = chargeResultDTO.getPayBackJson();
 
@@ -185,13 +186,10 @@ public class UserServiceImpl implements UserService {
         updateDTO.setId(userChargeRecordDTO.getId());
         updateDTO.setOutTradeNo(outTradeNo);
         updateDTO.setPayBackJson(payBackJson);
-        updateDTO.setStatus(2);
+        updateDTO.setStatus(PayStatusEnum.PAY.getCode());
         userChargeRecordRepository.updateById(updateDTO);
-        ChargePackageDTO chargePackageDTO = chargePackageRepository.queryById(userChargeRecordDTO.getPackageId());
-        if (chargePackageDTO == null) {
-            throw new BusinessException("套餐不存在");
-        }
-        BigDecimal totalAddAmount = chargePackageDTO.getChargeAmount().add(chargePackageDTO.getDonationAmount());
+
+        BigDecimal totalAddAmount = userChargeRecordDTO.getChargeAmount().add(userChargeRecordDTO.getDonationAmount());
         UserWalletDTO queryUserWalletDTO = new UserWalletDTO();
         queryUserWalletDTO.setUserId(user.getId());
         UserWalletDTO userWalletDTO = userWalletRepository.queryOne(queryUserWalletDTO);

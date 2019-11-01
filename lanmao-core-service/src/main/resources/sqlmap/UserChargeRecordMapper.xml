@@ -12,8 +12,11 @@
         <if test="packageId != null">
             AND package_id = #{packageId}
         </if>
-        <if test="payAmount != null">
-            AND pay_amount = #{payAmount}
+        <if test="chargeAmount != null">
+            AND charge_amount = #{chargeAmount}
+        </if>
+        <if test="donationAmount != null">
+            AND donation_amount = #{donationAmount}
         </if>
         <if test="tradeNo != null">
             AND trade_no = #{tradeNo}

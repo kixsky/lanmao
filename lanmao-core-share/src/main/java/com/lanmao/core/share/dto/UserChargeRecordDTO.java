@@ -19,9 +19,11 @@ public class UserChargeRecordDTO extends BaseBean {
 
     private Integer status;
 
-    private BigDecimal payAmount;
+    private BigDecimal chargeAmount; //充值金额
 
-    private String outTradeNo;
+    private BigDecimal donationAmount; //赠送金额
+
+    private String outTradeNo; //微信交易号
 
     private String payBackJson;
 

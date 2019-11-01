@@ -2,6 +2,7 @@ package com.lanmao.user.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.lanmao.common.bean.BaseResult;
+import com.lanmao.common.constants.PayStatusEnum;
 import com.lanmao.common.exception.BusinessException;
 import com.lanmao.common.utils.CommonUtils;
 import com.lanmao.common.utils.RequestUtil;
@@ -85,8 +86,9 @@ public class ChargeController {
         userChargeRecordDTO.setUserId(userDTO.getId());
         userChargeRecordDTO.setPackageId(packageId);
         userChargeRecordDTO.setTradeNo(tradeNo);
-        userChargeRecordDTO.setStatus(1);
-        userChargeRecordDTO.setPayAmount(chargePackageDTO.getChargeAmount());
+        userChargeRecordDTO.setStatus(PayStatusEnum.NOT_PAY.getCode());
+        userChargeRecordDTO.setChargeAmount(chargePackageDTO.getChargeAmount());
+        userChargeRecordDTO.setDonationAmount(chargePackageDTO.getDonationAmount());
         BaseResult<UserChargeRecordDTO> bookChargeResult = userService.bookCharge(userChargeRecordDTO);
         if (bookChargeResult.failed()) {
             throw new BusinessException(bookChargeResult.getMessage());

@@ -47,11 +47,13 @@ public class NotifyController {
         }
         String outTradeNo = map.get("out_trade_no");
         String totalFee = map.get("total_fee");
+        String transactionId = map.get("transaction_id");
 
         UserChargeRecordDTO userChargeRecordDTO = new UserChargeRecordDTO();
         userChargeRecordDTO.setTradeNo(outTradeNo);
+        userChargeRecordDTO.setOutTradeNo(transactionId);
         userChargeRecordDTO.setPayBackJson(JSON.toJSONString(map));
-        userChargeRecordDTO.setPayAmount(new BigDecimal(totalFee).divide(BigDecimal.valueOf(100)));
+        userChargeRecordDTO.setChargeAmount(new BigDecimal(totalFee).divide(BigDecimal.valueOf(100)));
         BaseResult<String> chargeResult = userService.chargeNotify(userChargeRecordDTO);
         log.info("chargeResult: {}", JSON.toJSONString(chargeResult));
         if (chargeResult.failed()) {

@@ -19,7 +19,9 @@ public class UserChargeRecordDO extends BaseBean {
 
     private Long packageId;
 
-    private BigDecimal payAmount;
+    private BigDecimal chargeAmount; //充值金额
+
+    private BigDecimal donationAmount; //赠送金额
 
     private String tradeNo;
 
