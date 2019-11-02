@@ -44,4 +44,14 @@ public interface ProductService {
     @RequestMapping(value = "/queryPage", method = RequestMethod.POST)
     BaseResult<PageDTO<ProductDTO>> queryPage(@RequestBody PageDTO<ProductDTO> queryParams);
 
+
+    /**
+     *
+     * 查询一个对象
+     * @param query
+     * @return
+     */
+    @RequestMapping(value = "/queryOne", method = RequestMethod.POST)
+    BaseResult<ProductDTO> queryOne(@RequestBody ProductDTO query);
+
 }

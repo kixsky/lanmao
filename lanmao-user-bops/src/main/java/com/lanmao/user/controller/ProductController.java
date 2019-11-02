@@ -6,10 +6,7 @@ import com.lanmao.common.bean.PageDTO;
 import com.lanmao.core.share.dto.ProductDTO;
 import com.lanmao.core.share.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -31,5 +28,18 @@ public class ProductController {
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     public BaseResult<PageDTO<ProductDTO>> list(@RequestBody PageDTO<ProductDTO> queryParams) {
         return productService.queryPage(queryParams);
+    }
+
+    /**
+     *
+     * 查询项目
+     * @param productId
+     * @return
+     */
+    @RequestMapping(value = "/{productId}", method = RequestMethod.GET)
+    public BaseResult<ProductDTO> queryById(@PathVariable("productId") Long productId) {
+        ProductDTO query = new ProductDTO();
+        query.setId(productId);
+        return productService.queryOne(query);
     }
 }

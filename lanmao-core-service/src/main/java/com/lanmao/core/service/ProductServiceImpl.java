@@ -66,4 +66,13 @@ public class ProductServiceImpl implements ProductService {
         baseResult.setData(pageDTO);
         return baseResult;
     }
+
+    @Override
+    public BaseResult<ProductDTO> queryOne(@RequestBody ProductDTO query) {
+        BaseResult<ProductDTO> baseResult = new BaseResult<>();
+        baseResult.setCodeSuccess();
+        ProductDTO productDTO = productRepository.queryOne(query);
+        baseResult.setData(productDTO);
+        return baseResult;
+    }
 }
