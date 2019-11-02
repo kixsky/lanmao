@@ -55,4 +55,14 @@ public interface MechService {
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     BaseResult<MechDTO> login(@RequestBody MechDTO loginDTO);
+
+
+    /**
+     *
+     * 查询一个对象
+     * @param query
+     * @return
+     */
+    @RequestMapping(value = "/queryOne", method = RequestMethod.POST)
+    BaseResult<MechDTO> queryOne(@RequestBody MechDTO query);
 }

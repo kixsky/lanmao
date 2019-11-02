@@ -6,6 +6,7 @@ import com.lanmao.core.dataobject.MechDO;
 import com.lanmao.core.mapper.MechDAO;
 import com.lanmao.core.share.dto.MechDTO;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
@@ -49,6 +50,10 @@ public class MechRepository extends BaseRepository<MechDTO> {
 
     @Override
     public MechDTO queryOne(MechDTO query) {
+        List<MechDTO> list = queryList(query);
+        if (CollectionUtils.isNotEmpty(list)) {
+            return list.get(0);
+        }
         return null;
     }
 

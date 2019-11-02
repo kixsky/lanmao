@@ -49,10 +49,4 @@ public class MechDO extends BaseBean {
     private String starLevel;
 
     //========非数据库字段=======================
-
-    @TableField(exist = false)
-    private Integer offset;
-
-    @TableField(exist = false)
-    private Integer limit;
 }

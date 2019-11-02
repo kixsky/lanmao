@@ -21,6 +21,19 @@ public class MechController {
 
     /**
      *
+     * 根据Id查询
+     * @param mechId
+     * @return
+     */
+    @RequestMapping(value = "/{mechId}", method = RequestMethod.GET)
+    public BaseResult<MechDTO> queryById(@PathVariable("mechId") Long mechId) {
+        MechDTO query = new MechDTO();
+        query.setId(mechId);
+        return mechService.queryOne(query);
+    }
+
+    /**
+     *
      * 查询技师
      * @param pageDTO
      * @return
@@ -40,4 +53,7 @@ public class MechController {
     public BaseResult<List<ProductDTO>> selectProduct(@RequestBody MechDTO mechDTO) {
         return mechService.queryProduct(mechDTO.getId());
     }
+
+
+
 }

@@ -1,25 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lanmao.core.mapper.MechDAO">
-    <select id="selectList" resultType="com.lanmao.core.dataobject.MechDO">
-        SELECT *
-        FROM lanmao_mech
-        WHERE is_deleted = 'N'
+    <sql id="Base_List_Where">
+        is_deleted = 'N'
+        <if test="id != null">
+            AND id = #{id}
+        </if>
         <if test="name != null">
             AND name = #{name}
         </if>
+        <if test="avatar != null">
+            AND avatar = #{avatar}
+        </if>
+        <if test="gender != null">
+            AND gender = #{gender}
+        </if>
+        <if test="jobNum != null">
+            AND job_num = #{jobNum}
+        </if>
+        <if test="address != null">
+            AND address = #{address}
+        </if>
+        <if test="nativeAddress != null">
+            AND native_address = #{nativeAddress}
+        </if>
+        <if test="stageName != null">
+            AND stage_name = #{stageName}
+        </if>
+        <if test="mobile != null">
+            AND mobile = #{mobile}
+        </if>
+        <if test="remark != null">
+            AND remark = #{remark}
+        </if>
         <if test="offset != null">
             <if test="limit != null">
-                limit #{offset},#{limit}
+                LIMIT #{offset},#{limit}
             </if>
         </if>
+    </sql>
+    <select id="selectList" resultType="com.lanmao.core.dataobject.MechDO">
+        SELECT *
+        FROM lanmao_mech
+        WHERE
+        <include refid="Base_List_Where"/>
     </select>
     <select id="countSelectList" resultType="java.lang.Integer">
         SELECT count(*)
         from lanmao_mech
-        WHERE is_deleted = 'N'
-        <if test="name != null">
-            AND name = #{name}
-        </if>
+        WHERE
+        <include refid="Base_List_Where"/>
     </select>
 </mapper>

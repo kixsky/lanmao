@@ -104,4 +104,13 @@ public class MechServiceImpl implements MechService {
         baseResult.setData(mechDTO);
         return baseResult;
     }
+
+    @Override
+    public BaseResult<MechDTO> queryOne(@RequestBody MechDTO query) {
+        BaseResult<MechDTO> baseResult = new BaseResult<>();
+        baseResult.setCodeSuccess();
+        MechDTO mechDTO = mechRepository.queryOne(query);
+        baseResult.setData(mechDTO);
+        return baseResult;
+    }
 }
