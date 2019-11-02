@@ -80,4 +80,14 @@ public interface OrderService {
      */
     @RequestMapping(value = "/bookOrder", method = RequestMethod.POST)
     BaseResult<String> bookOrder(@RequestBody OrderDTO bookDTO);
+
+
+    /**
+     *
+     * 订单支付通知
+     * @param orderDTO
+     * @return
+     */
+    @RequestMapping(value = "/payNotify", method = RequestMethod.POST)
+    BaseResult<String> payNotify(@RequestBody OrderDTO orderDTO);
 }

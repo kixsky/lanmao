@@ -152,4 +152,9 @@ public class OrderServiceImpl implements OrderService {
         }
         return baseResult;
     }
+
+    @Override
+    public BaseResult<String> payNotify(@RequestBody OrderDTO orderDTO) {
+        return null;
+    }
 }
