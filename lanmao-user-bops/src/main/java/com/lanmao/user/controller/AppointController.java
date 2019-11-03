@@ -3,6 +3,7 @@ package com.lanmao.user.controller;
 import com.lanmao.common.annotation.IgnorePath;
 import com.lanmao.common.bean.BaseResult;
 import com.lanmao.common.utils.DateUtils;
+import com.lanmao.core.share.dto.BookDTO;
 import com.lanmao.core.share.dto.OrderDTO;
 import com.lanmao.core.share.dto.TimeBlockDTO;
 import com.lanmao.core.share.dto.TimeUnitDTO;
@@ -62,5 +63,18 @@ public class AppointController {
         }
         timeBlockDTO.setTimeUnitList(timeUnitDTOS);
         return timeBlockDTO;
+    }
+
+    /**
+     *
+     * 下订单
+     * @param bookDTO
+     * @return
+     */
+    @RequestMapping(value = "/book", method = RequestMethod.POST)
+    public BaseResult<String> book(@RequestBody BookDTO bookDTO) {
+        BaseResult<String> baseResult = new BaseResult<>();
+        baseResult.setCodeSuccess();
+        return baseResult;
     }
 }
