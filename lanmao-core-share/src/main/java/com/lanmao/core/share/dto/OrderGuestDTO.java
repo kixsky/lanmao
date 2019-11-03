@@ -16,7 +16,9 @@ public class OrderGuestDTO extends BaseBean {
 
     private String guestGender;
 
-    private List<GuestProductDTO> productList;
+    private List<GuestProductDTO> guestProductList;
 
-    private Long mechId; //服务技师
+    private List<ProductDTO> productList;
+
+    private List<MechDTO> mechList;
 }

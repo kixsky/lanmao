@@ -1,12 +1,13 @@
 package com.lanmao.user.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.lanmao.common.annotation.IgnorePath;
 import com.lanmao.common.bean.BaseResult;
 import com.lanmao.common.utils.DateUtils;
-import com.lanmao.core.share.dto.BookDTO;
 import com.lanmao.core.share.dto.OrderDTO;
 import com.lanmao.core.share.dto.TimeBlockDTO;
 import com.lanmao.core.share.dto.TimeUnitDTO;
+import com.lanmao.core.share.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +25,8 @@ import java.util.List;
 @RequestMapping(value = "/v1/appoint")
 public class AppointController {
 
+    @Resource
+    private OrderService orderService;
 
     /**
      *
@@ -72,9 +76,10 @@ public class AppointController {
      * @return
      */
     @RequestMapping(value = "/book", method = RequestMethod.POST)
-    public BaseResult<String> book(@RequestBody BookDTO bookDTO) {
+    public BaseResult<String> book(@RequestBody OrderDTO bookDTO) {
+        log.info("bookDTO: {}", JSON.toJSONString(bookDTO));
         BaseResult<String> baseResult = new BaseResult<>();
         baseResult.setCodeSuccess();
-        return baseResult;
+        return orderService.bookOrder(bookDTO);
     }
 }

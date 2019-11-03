@@ -10,10 +10,7 @@ import com.lanmao.core.repository.GuestProductRepository;
 import com.lanmao.core.repository.OrderGuestRepository;
 import com.lanmao.core.repository.OrderMechRepository;
 import com.lanmao.core.repository.OrderRepository;
-import com.lanmao.core.share.dto.GuestProductDTO;
-import com.lanmao.core.share.dto.OrderDTO;
-import com.lanmao.core.share.dto.OrderGuestDTO;
-import com.lanmao.core.share.dto.OrderMechDTO;
+import com.lanmao.core.share.dto.*;
 import com.lanmao.core.share.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -114,10 +111,10 @@ public class OrderServiceImpl implements OrderService {
         for (OrderGuestDTO guest: bookDTO.getGuestList()) {
             CommonUtils.checkParams(StringUtils.isEmpty(guest.getGuestName()), "guestName不能为空");
             CommonUtils.checkParams(StringUtils.isEmpty(guest.getGuestGender()), "guestGender不能为空");
-            List<GuestProductDTO> productList = guest.getProductList();
+            List<ProductDTO> productList = guest.getProductList();
             CommonUtils.checkParams(CollectionUtils.isEmpty(productList), "productList不能为空");
-            for (GuestProductDTO productDTO: productList) {
-                CommonUtils.checkParams(productDTO.getProductId() == null, "productId不能为空");
+            for (ProductDTO productDTO: productList) {
+                CommonUtils.checkParams(productDTO.getId() == null, "productId不能为空");
             }
         }
         //入库
@@ -130,14 +127,24 @@ public class OrderServiceImpl implements OrderService {
             guest.setCreator(modifier);
             guest.setModifier(modifier);
             Long newGuestId = orderGuestRepository.save(guest);
-            for (GuestProductDTO productDTO: guest.getProductList()) {
-                productDTO.setGuestId(newGuestId);
-                productDTO.setCreator(modifier);
-                productDTO.setModifier(modifier);
-                guestProductRepository.save(productDTO);
+            List<ProductDTO> productList = guest.getProductList();
+            if (CollectionUtils.isNotEmpty(productList)) {
+                for (ProductDTO productDTO: guest.getProductList()) {
+                    GuestProductDTO guestProduct = new GuestProductDTO();
+                    guestProduct.setGuestId(newGuestId);
+                    guestProduct.setCreator(modifier);
+                    guestProduct.setModifier(modifier);
+                    guestProduct.setProductId(productDTO.getId());
+                    guestProduct.setProductName(productDTO.getName());
+                    guestProduct.setProductPrice(productDTO.getSellPrice());
+                    guestProductRepository.save(guestProduct);
+                }
             }
-            if (guest.getMechId() != null) {
-                orderMechIds.add(guest.getMechId());
+            List<MechDTO> mechList = guest.getMechList();
+            if (CollectionUtils.isNotEmpty(mechList)) {
+                for (MechDTO mech: mechList) {
+                    orderMechIds.add(mech.getId());
+                }
             }
         }
         if (CollectionUtils.isNotEmpty(orderMechIds)) {
