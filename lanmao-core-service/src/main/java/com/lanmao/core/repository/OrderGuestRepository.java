@@ -1,6 +1,8 @@
 package com.lanmao.core.repository;
 
 import com.lanmao.common.base.BaseRepository;
+import com.lanmao.common.utils.CommonUtils;
+import com.lanmao.core.dataobject.OrderGuestDO;
 import com.lanmao.core.mapper.OrderGuestDAO;
 import com.lanmao.core.share.dto.OrderGuestDTO;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +20,11 @@ public class OrderGuestRepository extends BaseRepository<OrderGuestDTO> {
 
     @Override
     public Long save(OrderGuestDTO saveObject) {
-        return null;
+        OrderGuestDO record = new OrderGuestDO();
+        CommonUtils.copyProperties(saveObject, record);
+        CommonUtils.setInsertDefaultValue(record);
+        orderGuestDAO.insert(record);
+        return record.getId();
     }
 
     @Override

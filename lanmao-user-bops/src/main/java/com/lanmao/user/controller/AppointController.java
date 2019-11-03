@@ -7,7 +7,9 @@ import com.lanmao.common.utils.DateUtils;
 import com.lanmao.core.share.dto.OrderDTO;
 import com.lanmao.core.share.dto.TimeBlockDTO;
 import com.lanmao.core.share.dto.TimeUnitDTO;
+import com.lanmao.core.share.dto.UserDTO;
 import com.lanmao.core.share.service.OrderService;
+import com.lanmao.user.auth.LoginHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -80,6 +82,8 @@ public class AppointController {
         log.info("bookDTO: {}", JSON.toJSONString(bookDTO));
         BaseResult<String> baseResult = new BaseResult<>();
         baseResult.setCodeSuccess();
+        UserDTO loginUser = LoginHolder.get();
+        bookDTO.setUserId(loginUser.getId());
         return orderService.bookOrder(bookDTO);
     }
 }

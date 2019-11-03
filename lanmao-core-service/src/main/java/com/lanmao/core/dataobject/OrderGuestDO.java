@@ -19,10 +19,4 @@ public class OrderGuestDO extends BaseBean {
     private String guestName;
 
     private String guestGender;
-
-    @TableField(exist = false)
-    private Integer offset;
-
-    @TableField(exist = false)
-    private Integer limit;
 }

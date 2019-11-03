@@ -1,6 +1,7 @@
 package com.lanmao.core.repository;
 
 import com.lanmao.common.base.BaseRepository;
+import com.lanmao.common.utils.CommonUtils;
 import com.lanmao.core.dataobject.GuestProductDO;
 import com.lanmao.core.mapper.GuestProductDAO;
 import com.lanmao.core.share.dto.GuestProductDTO;
@@ -19,7 +20,11 @@ public class GuestProductRepository extends BaseRepository<GuestProductDTO> {
 
     @Override
     public Long save(GuestProductDTO saveObject) {
-        return null;
+        GuestProductDO record = new GuestProductDO();
+        CommonUtils.copyProperties(saveObject, record);
+        CommonUtils.setInsertDefaultValue(record);
+        guestProductDAO.insert(record);
+        return record.getId();
     }
 
     @Override
