@@ -32,6 +32,4 @@ public class OrderDTO extends BaseBean {
     private Date finishTime;
 
     private List<OrderGuestDTO> guestList; //客次
-
-    private Long addressId; //地址
 }

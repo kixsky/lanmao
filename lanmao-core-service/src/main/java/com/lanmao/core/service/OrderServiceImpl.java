@@ -6,6 +6,7 @@ import com.lanmao.common.bean.BaseResult;
 import com.lanmao.common.bean.PageDTO;
 import com.lanmao.common.constants.ErrorCodeEnum;
 import com.lanmao.common.constants.GenderEnum;
+import com.lanmao.common.constants.PayStatusEnum;
 import com.lanmao.common.utils.CommonUtils;
 import com.lanmao.core.repository.GuestProductRepository;
 import com.lanmao.core.repository.OrderGuestRepository;
@@ -104,14 +105,12 @@ public class OrderServiceImpl implements OrderService {
         baseResult.setCodeSuccess();
         //校验
         CommonUtils.checkParams(bookDTO.getUserId() == null, "userId不能为空");
-        CommonUtils.checkParams(bookDTO.getAddressId() == null, "addressId不能为空");
+        CommonUtils.checkParams(StringUtils.isEmpty(bookDTO.getAddress()), "address不能为空");
         CommonUtils.checkParams(StringUtils.isEmpty(bookDTO.getLinkMobile()), "linkMobile不能为空");
         CommonUtils.checkParams(StringUtils.isEmpty(bookDTO.getLinkName()), "linkName不能为空");
         CommonUtils.checkParams(bookDTO.getBookTime() == null, "bookTime不能为空");
         CommonUtils.checkParams(CollectionUtils.isEmpty(bookDTO.getGuestList()), "guestList不能为空");
         for (OrderGuestDTO guest: bookDTO.getGuestList()) {
-//            CommonUtils.checkParams(StringUtils.isEmpty(guest.getGuestName()), "guestName不能为空");
-//            CommonUtils.checkParams(StringUtils.isEmpty(guest.getGuestGender()), "guestGender不能为空");
             List<ProductDTO> productList = guest.getProductList();
             CommonUtils.checkParams(CollectionUtils.isEmpty(productList), "productList不能为空");
             for (ProductDTO productDTO: productList) {
@@ -141,6 +140,7 @@ public class OrderServiceImpl implements OrderService {
                     guestProduct.setProductId(productDTO.getId());
                     guestProduct.setProductName(productDTO.getName());
                     guestProduct.setProductPrice(productDTO.getSellPrice());
+                    guestProduct.setPayStatus(PayStatusEnum.NOT_PAY.getCode());
                     guestProductRepository.save(guestProduct);
                 }
             }
