@@ -1,5 +1,6 @@
 package com.lanmao.user.controller;
 
+import com.lanmao.common.annotation.IgnorePath;
 import com.lanmao.common.bean.BaseResult;
 import com.lanmao.common.bean.PageDTO;
 import com.lanmao.core.share.dto.MechDTO;
@@ -39,6 +40,7 @@ public class MechController {
      * @return
      */
     @RequestMapping(value = "/list", method = RequestMethod.POST)
+    @IgnorePath
     public BaseResult<PageDTO<MechDTO>> list(@RequestBody PageDTO<MechDTO> pageDTO) {
         return mechService.queryPage(pageDTO);
     }
@@ -50,6 +52,7 @@ public class MechController {
      * @return
      */
     @RequestMapping(value = "/selectProduct", method = RequestMethod.POST)
+    @IgnorePath
     public BaseResult<List<ProductDTO>> selectProduct(@RequestBody MechDTO mechDTO) {
         return mechService.queryProduct(mechDTO.getId());
     }
