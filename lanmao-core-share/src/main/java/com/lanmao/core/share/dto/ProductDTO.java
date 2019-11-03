@@ -22,11 +22,9 @@ public class ProductDTO extends BaseBean {
 
     private Integer status;
 
+    private String proDesc;
+
     private String isRec;
 
     private String isNew;
-
-    private Integer offset;
-
-    private Integer limit;
 }

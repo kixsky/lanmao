@@ -28,13 +28,9 @@ public class ProductDO extends BaseBean {
 
     private Integer status;
 
+    private String proDesc;
+
     private String isRec;
 
     private String isNew;
-
-    @TableField(exist = false)
-    private Integer offset;
-
-    @TableField(exist = false)
-    private Integer limit;
 }
