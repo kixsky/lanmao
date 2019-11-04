@@ -1,6 +1,8 @@
 package com.lanmao.user.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.lanmao.common.bean.BaseResult;
+import com.lanmao.common.bean.PageDTO;
 import com.lanmao.common.constants.ErrorCodeEnum;
 import com.lanmao.common.lock.RedissonLockUtil;
 import com.lanmao.core.share.dto.OrderDTO;
@@ -52,5 +54,26 @@ public class OrderController {
             redissonLock.unLock(loginDTO.getId() + "_book_order");
         }
         return baseResult;
+    }
+
+
+    /**
+     *
+     * 查询我的订单
+     * @param pageDTO
+     * @return
+     */
+    @RequestMapping(value = "/myOrder", method = RequestMethod.POST)
+    public BaseResult<PageDTO<OrderDTO>> myOrder(@RequestBody PageDTO<OrderDTO> pageDTO) {
+        log.info("pageDTO: {}", JSON.toJSONString(pageDTO));
+        pageDTO.setDefaultValue();
+        OrderDTO params = pageDTO.getParams();
+        if (params == null) {
+            params = new OrderDTO();
+            pageDTO.setParams(params);
+        }
+        UserDTO loginUser = LoginHolder.get();
+        params.setUserId(loginUser.getId());
+        return orderService.queryPage(pageDTO);
     }
 }

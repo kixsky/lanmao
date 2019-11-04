@@ -9,6 +9,7 @@ import com.lanmao.core.share.dto.TimeBlockDTO;
 import com.lanmao.core.share.dto.TimeUnitDTO;
 import com.lanmao.core.share.dto.UserDTO;
 import com.lanmao.core.share.service.OrderService;
+import com.lanmao.user.aop.NotRepeatAction;
 import com.lanmao.user.auth.LoginHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
@@ -78,6 +79,7 @@ public class AppointController {
      * @return
      */
     @RequestMapping(value = "/book", method = RequestMethod.POST)
+    @NotRepeatAction
     public BaseResult<String> book(@RequestBody OrderDTO bookDTO) {
         log.info("bookDTO: {}", JSON.toJSONString(bookDTO));
         BaseResult<String> baseResult = new BaseResult<>();

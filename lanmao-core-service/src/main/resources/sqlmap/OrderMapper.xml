@@ -15,12 +15,25 @@
         <if test="address != null">
             AND address = #{address}
         </if>
+        <if test="offset != null">
+            <if test="limit != null">
+                LIMIT #{offset},#{limit}
+            </if>
+        </if>
+    </sql>
+    <sql id="Base_Limit">
+        <if test="offset != null">
+            <if test="limit != null">
+                LIMIT #{offset},#{limit}
+            </if>
+        </if>
     </sql>
     <select id="selectList" resultType="com.lanmao.core.dataobject.OrderDO">
         SELECT *
         FROM lanmao_order
         WHERE
         <include refid="Base_List_Where"/>
+        <include refid="Base_Limit"/>
     </select>
     <select id="countSelectList" resultType="java.lang.Integer">
         SELECT count(*)

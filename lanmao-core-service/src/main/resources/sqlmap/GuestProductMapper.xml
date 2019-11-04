@@ -18,6 +18,8 @@
         <if test="payStatus != null">
             AND pay_status = #{payStatus}
         </if>
+    </sql>
+    <sql id="Base_Limit">
         <if test="offset != null">
             <if test="limit != null">
                 LIMIT #{offset},#{limit}
@@ -29,6 +31,7 @@
         FROM lanmao_guest_product
         WHERE
         <include refid="Base_Select_Where"/>
+        <include refid="Base_Limit"/>
     </select>
     <select id="countSelectList" resultType="java.lang.Integer">
         SELECT count(*)

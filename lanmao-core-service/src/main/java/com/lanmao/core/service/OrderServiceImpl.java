@@ -8,10 +8,7 @@ import com.lanmao.common.constants.ErrorCodeEnum;
 import com.lanmao.common.constants.GenderEnum;
 import com.lanmao.common.constants.PayStatusEnum;
 import com.lanmao.common.utils.CommonUtils;
-import com.lanmao.core.repository.GuestProductRepository;
-import com.lanmao.core.repository.OrderGuestRepository;
-import com.lanmao.core.repository.OrderMechRepository;
-import com.lanmao.core.repository.OrderRepository;
+import com.lanmao.core.repository.*;
 import com.lanmao.core.share.dto.*;
 import com.lanmao.core.share.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
@@ -41,6 +38,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Resource
     private OrderMechRepository orderMechRepository;
+
+    @Resource
+    private ProductRepository productRepository;
 
     @Override
     public BaseResult<Long> save(@RequestBody OrderDTO orderDTO) {
@@ -91,6 +91,24 @@ public class OrderServiceImpl implements OrderService {
         final Integer offset = (page - 1) * pageSize;
         List<OrderDTO> list = orderRepository.queryList(params);
         final int totalCount = orderRepository.countQueryList(params);
+
+        if (CollectionUtils.isNotEmpty(list)) {
+            for (OrderDTO order: list) {
+                List<ProductDTO> productList = new ArrayList<>();
+                List<MechDTO> mechList = new ArrayList<>();
+                List<OrderGuestDTO> guestList = orderGuestRepository.getByOrderId(order.getId());
+                for (OrderGuestDTO guest: guestList) {
+                    List<GuestProductDTO> guestProducts = guestProductRepository.getByGuestId(guest.getId());
+                    for (GuestProductDTO guestProduct: guestProducts) {
+                        ProductDTO productDTO = productRepository.queryById(guestProduct.getProductId());
+                        productList.add(productDTO);
+                    }
+                }
+                order.setGuestList(guestList);
+                order.setProductList(productList);
+                order.setMechList(mechList);
+            }
+        }
         pageDTO.setTotalCount(totalCount);
         pageDTO.setList(list);
         baseResult.setData(pageDTO);

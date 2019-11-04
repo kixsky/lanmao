@@ -27,6 +27,12 @@ public class GuestProductRepository extends BaseRepository<GuestProductDTO> {
         return record.getId();
     }
 
+    public List<GuestProductDTO> getByGuestId(Long guestId) {
+        GuestProductDTO query = new GuestProductDTO();
+        query.setGuestId(guestId);
+        return queryList(query);
+    }
+
     @Override
     public GuestProductDTO queryById(Long id) {
         return null;
@@ -34,7 +40,10 @@ public class GuestProductRepository extends BaseRepository<GuestProductDTO> {
 
     @Override
     public List<GuestProductDTO> queryList(GuestProductDTO query) {
-        return null;
+        GuestProductDO record = new GuestProductDO();
+        CommonUtils.copyProperties(query, record);
+        List<GuestProductDO> list = guestProductDAO.selectList(record);
+        return CommonUtils.convertList(list, GuestProductDTO.class);
     }
 
     @Override

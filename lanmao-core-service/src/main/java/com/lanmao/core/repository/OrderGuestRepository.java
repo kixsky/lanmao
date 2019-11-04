@@ -27,6 +27,12 @@ public class OrderGuestRepository extends BaseRepository<OrderGuestDTO> {
         return record.getId();
     }
 
+    public List<OrderGuestDTO> getByOrderId(Long orderId) {
+        OrderGuestDTO query = new OrderGuestDTO();
+        query.setOrderId(orderId);
+        return queryList(query);
+    }
+
     @Override
     public OrderGuestDTO queryById(Long id) {
         return null;
@@ -34,7 +40,10 @@ public class OrderGuestRepository extends BaseRepository<OrderGuestDTO> {
 
     @Override
     public List<OrderGuestDTO> queryList(OrderGuestDTO query) {
-        return null;
+        OrderGuestDO record = new OrderGuestDO();
+        CommonUtils.copyProperties(query, record);
+        List<OrderGuestDO> list = orderGuestDAO.selectList(record);
+        return CommonUtils.convertList(list, OrderGuestDTO.class);
     }
 
     @Override

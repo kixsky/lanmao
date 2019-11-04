@@ -35,12 +35,17 @@ public class OrderRepository extends BaseRepository<OrderDTO> {
 
     @Override
     public List<OrderDTO> queryList(OrderDTO query) {
-        return null;
+        OrderDO record = new OrderDO();
+        CommonUtils.copyProperties(query, record);
+        List<OrderDO> list = orderMapper.selectList(record);
+        return CommonUtils.convertList(list, OrderDTO.class);
     }
 
     @Override
     public int countQueryList(OrderDTO query) {
-        return 0;
+        OrderDO record = new OrderDO();
+        CommonUtils.copyProperties(query, record);
+        return orderMapper.countSelectList(record);
     }
 
     @Override
