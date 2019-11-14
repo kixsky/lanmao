@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lanmao.core.mapper.ShopDAO">
+    <sql id="Base_List_Column">
+        id,
+        brand_id,
+        name,
+        image_url,
+        mobile_phone,
+        fixed_telephone,
+        lng,
+        lat,
+        creator,
+        gmt_created,
+        modifier,
+        gmt_modified,
+        is_deleted
+    </sql>
+    <select id="selectListByDO" parameterType="com.lanmao.core.dataobject.ShopDO">
+        SELECT <include refid="Base_List_Column"/>
+        FROM lanmao_shop
+        WHERE is_deleted = 'N'
+        <if test="id != null">
+            AND id = #{id}
+        </if>
+        <if test="brandId != null">
+            AND brand_id = #{brandId}
+        </if>
+        <if test="name != null">
+            AND name = #{name}
+        </if>
+        <if test="imageUrl != null">
+            AND image_url = #{imageUrl}
+        </if>
+        <if test="mobilePhone != null">
+            AND mobile_phone = #{mobilePhone}
+        </if>
+        <if test="fixedTelephone != null">
+            AND fixed_telephone = #{fixedTelephone}
+        </if>
+        <if test="lng != null">
+            AND lng = #{lng}
+        </if>
+        <if test="lat != null">
+            AND lat = #{lat}
+        </if>
+    </select>
+</mapper>
